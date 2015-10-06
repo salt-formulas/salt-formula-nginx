@@ -1,0 +1,42 @@
+{%- from "nginx/map.jinja" import server with context %}
+{%- if server.enabled %}
+
+include:
+  - nginx.server.users
+  - nginx.server.sites
+
+nginx_packages:
+  pkg.installed:
+  - names: {{ server.pkgs }}
+
+{%- if server.extras %}
+nginx_extra_packages:
+  pkg.installed:
+  - name: nginx-extras
+{%- endif %}
+
+/etc/nginx/sites-enabled/default:
+  file.absent:
+  - require:
+    - pkg: nginx_packages
+
+/etc/nginx/sites-available/default:
+  file.absent:
+  - require:
+    - pkg: nginx_packages
+
+/etc/nginx/nginx.conf:
+  file.managed:
+  - source: salt://nginx/files/nginx.conf
+  - require:
+    - pkg: nginx_packages
+  - watch_in:
+    - service: nginx_service
+
+nginx_service:
+  service.running:
+  - name: {{ server.service }}
+  - require:
+    - pkg: nginx_packages
+
+{%- endif %}

@@ -1,0 +1,10 @@
+applications:
+- nginx
+parameters:
+  nginx:
+    server:
+      enabled: true
+      extras: false
+      bind:
+        address: 0.0.0.0
+        protocol: tcp

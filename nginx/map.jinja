@@ -1,0 +1,9 @@
+
+{% set server = salt['grains.filter_by']({
+    'Debian': {
+        'pkgs': ['nginx', 'apache2-utils'],
+        'service': 'nginx',
+        'vhost_dir': '/etc/nginx/sites-available',
+        'log_dir': '/var/log/nginx',
+    },
+}, merge=salt['pillar.get']('nginx:server')) %}
