@@ -9,7 +9,7 @@ nginx_packages:
   pkg.installed:
   - names: {{ server.pkgs }}
 
-{%- if server.extras %}
+{%- if server.extras is defined %}
 nginx_extra_packages:
   pkg.installed:
   - name: nginx-extras
