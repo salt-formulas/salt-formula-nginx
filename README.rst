@@ -130,6 +130,29 @@ Gitlab server with user for basic auth
             enabled: true
             password: magicunicorn
 
+Proxy buffering
+
+.. code-block:: yaml
+
+    nginx:
+      server:
+        enabled: true
+        bind:
+          address: '0.0.0.0'
+          ports:
+          - 80
+        site:
+          gitlab_proxy:
+            enabled: true
+            type: proxy
+            proxy:
+              buffer:
+                number: 8
+                size: 16
+            host:
+              name: gitlab.domain.com
+              port: 80
+
 Read more
 =========
 
