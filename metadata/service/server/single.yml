@@ -8,3 +8,6 @@ parameters:
       bind:
         address: 0.0.0.0
         protocol: tcp
+      logging:
+        heka:
+          enabled: true

@@ -1,0 +1,42 @@
+{%- from "nginx/map.jinja" import server with context -%}
+## Inputs
+
+[logstreamer_nginx_access]
+type = "LogstreamerInput"
+log_directory = "/var/log/nginx"
+file_match = 'access\.log\.?(?P<Index>\d+)?(.gz)'
+priority = ["^Index"]
+decoder = "Sandbox_nginx_access"
+
+[logstreamer_nginx_error]
+type = "LogstreamerInput"
+log_directory = "/var/log/nginx"
+file_match = 'error\.log\.?(?P<Index>\d+)?(.gz)'
+priority = ["^Index"]
+decoder = "Sandbox_nginx_error"
+
+[logstreamer_nginx_site_access]
+type = "LogstreamerInput"
+log_directory = "/var/log/nginx"
+file_match = '(?P<SiteName>.+)-access\.log\.?(?P<Index>\d*)'
+priority = ["^Index"]
+differentiator = ["nginx-", "SiteName", "-access"]
+decoder = "Sandbox_nginx_access"
+
+[logstreamer_nginx_site_error]
+type = "LogstreamerInput"
+log_directory = "/var/log/nginx"
+file_match = '(?P<SiteName>.+)-error\.log\.?(?P<Index>\d*)'
+priority = ["^Index"]
+differentiator = ["nginx-", "SiteName", "-error"]
+decoder = "Sandbox_nginx_error"
+
+## Sandboxes
+
+[Sandbox_nginx_access]
+type = "SandboxDecoder"
+filename = "lua_decoders/nginx_access.lua"
+
+[Sandbox_nginx_error]
+type = "SandboxDecoder"
+filename = "lua_decoders/nginx_error.lua"
