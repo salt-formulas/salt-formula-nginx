@@ -4,14 +4,14 @@
 [logstreamer_nginx_access]
 type = "LogstreamerInput"
 log_directory = "/var/log/nginx"
-file_match = 'access\.log\.?(?P<Index>\d+)?(.gz)(?P<Index>\d*)''
+file_match = 'access\.log\.?(?P<Index>\d+)?(.gz)(?P<Index>\d*)'
 priority = ["^Index"]
 decoder = "Sandbox_nginx_access"
 
 [logstreamer_nginx_error]
 type = "LogstreamerInput"
 log_directory = "/var/log/nginx"
-file_match = 'error\.log\.?(?P<Index>\d+)?(.gz)(?P<Index>\d*)''
+file_match = 'error\.log\.?(?P<Index>\d+)?(.gz)(?P<Index>\d*)'
 priority = ["^Index"]
 decoder = "Sandbox_nginx_error"
 
