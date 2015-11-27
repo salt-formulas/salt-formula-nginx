@@ -1,0 +1,20 @@
+{%- from "nginx/map.jinja" import server with context -%}
+name: Nginx
+description: Nginx is an open source reverse proxy server for HTTP, HTTPS, SMTP, POP3, and IMAP protocols, as well as a load balancer, HTTP cache, and a web server (origin server). The nginx project started with a strong focus on high concurrency, high performance and low memory usage.
+role:
+  system:
+    name: Server
+    param:
+      bind_host:
+        name: Bind host
+        value: {{ server.bind.address }}
+    endpoint:
+{%- for site_name, site in server.get('site', {}).iteritems() %}
+{%- if site.enabled %}
+      {{ site_name }}_{{ site.type }}:
+        name: {{ site_name }}
+        type: {{ site.type }}
+        address: http{% if site.get('ssl', {}).get('enabled', False) %}s{% endif %}://{{ site.host.name }}:{{ site.host.get('port', '80') }}/
+        protocol: http{% if site.get('ssl', {}).get('enabled', False) %}s{% endif %}
+{%- endif %}
+{%- endfor %}

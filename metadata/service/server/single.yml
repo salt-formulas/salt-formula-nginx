@@ -1,5 +1,7 @@
 applications:
 - nginx
+classes:
+- service.nginx.support
 parameters:
   nginx:
     server:
@@ -8,6 +10,3 @@ parameters:
       bind:
         address: 0.0.0.0
         protocol: tcp
-      logging:
-        heka:
-          enabled: true
