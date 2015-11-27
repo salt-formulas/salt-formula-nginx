@@ -5,6 +5,8 @@ role:
   server:
     name: Server
     param:
+      version:
+        value: {{ salt['cmd.run']('nginx -v')|replace('nginx version: nginx/ ', '') }}
       bind_host:
         name: Bind host
         value: {{ server.bind.address }}
