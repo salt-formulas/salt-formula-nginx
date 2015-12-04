@@ -5,6 +5,8 @@
 
 {% if site.ssl is defined and site.ssl.enabled %}
 
+{%- if site.ssl.engine is not defined %}
+
 {{ site.host.name }}_public_cert_{{ loop.index }}:
   file.managed:
   - name: /etc/ssl/certs/{{ site.host.name }}.crt
@@ -49,6 +51,8 @@ nginx_init_{{ site.host.name }}_tls_{{ loop.index }}:
     - file: /etc/ssl/certs/{{ site.host.name }}-ca-chain.crt
   - watch_in:
     - service: nginx_service
+
+{%- endif %}
 
 {% endif %}
 
