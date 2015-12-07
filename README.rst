@@ -153,6 +153,29 @@ Proxy buffering
               name: gitlab.domain.com
               port: 80
 
+Let's Encrypt
+
+.. code-block:: yaml
+
+    nginx:
+      server:
+        enabled: true
+        bind:
+          address: '0.0.0.0'
+          ports:
+          - 443
+        site:
+          gitlab_domain:
+            enabled: true
+            type: gitlab
+            name: domain
+            ssl:
+              enabled: true
+              engine: letsencrypt
+            host:
+              name: gitlab.domain.com
+              port: 443
+
 Read more
 =========
 

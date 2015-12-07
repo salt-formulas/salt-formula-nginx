@@ -5,6 +5,8 @@
 
 {% if site.ssl is defined and site.ssl.enabled %}
 
+{%- if site.ssl.engine is not defined %}
+
 {{ site.host.name }}_public_cert_{{ loop.index }}:
   file.managed:
   - name: /etc/ssl/certs/{{ site.host.name }}.crt
@@ -50,10 +52,13 @@ nginx_init_{{ site.host.name }}_tls_{{ loop.index }}:
   - watch_in:
     - service: nginx_service
 
+{%- endif %}
+
 {% endif %}
 
-/etc/nginx/sites-available/{{ site.type }}_{{ site.name }}.conf:
+sites-available-{{ site_name }}:
   file.managed:
+  - name: /etc/nginx/sites-available/{{ site.type }}_{{ site.name }}.conf
   {%- if site.type == 'nginx_proxy' %}
   - source: salt://nginx/files/proxy.conf
   {%- elif site.type == 'nginx_redirect' %}
@@ -71,8 +76,9 @@ nginx_init_{{ site.host.name }}_tls_{{ loop.index }}:
   - defaults:
     site_name: "{{ site_name }}"
 
-/etc/nginx/sites-enabled/{{ site.type }}_{{ site.name }}.conf:
+sites-enabled-{{ site_name }}:
   file.symlink:
+  - name: /etc/nginx/sites-enabled/{{ site.type }}_{{ site.name }}.conf
   - target: /etc/nginx/sites-available/{{ site.type }}_{{ site.name }}.conf
 
 {%- else %}
