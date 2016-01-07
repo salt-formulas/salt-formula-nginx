@@ -32,6 +32,8 @@
   - require:
     - pkg: nginx_packages
 
+{%- if site.ssl.chain is defined or site.ssl.authority is defined %}
+
 {{ site.host.name }}_ca_chain_{{ loop.index }}:
   file.managed:
   - name: /etc/ssl/certs/{{ site.host.name }}-ca-chain.crt
@@ -51,6 +53,8 @@ nginx_init_{{ site.host.name }}_tls_{{ loop.index }}:
     - file: /etc/ssl/certs/{{ site.host.name }}-ca-chain.crt
   - watch_in:
     - service: nginx_service
+
+{%- endif %}
 
 {%- endif %}
 
