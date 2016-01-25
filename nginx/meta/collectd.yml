@@ -1,0 +1,7 @@
+
+plugin:
+  collectd_nginx:
+    plugin: nginx
+    interval: 60
+    template: collectd/files/collectd_nginx.conf
+

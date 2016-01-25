@@ -176,6 +176,22 @@ Let's Encrypt
               name: gitlab.domain.com
               port: 443
 
+Nginx stats server (required by collectd nginx plugin)
+
+.. code-block::
+
+    nginx:
+      server:
+        enabled: true
+        site:
+          nginx_stats_server:
+            enabled: true
+            type: nginx_stats
+            name: server
+            host:
+              name: 127.0.0.1
+              port: 8888
+
 Read more
 =========
 
