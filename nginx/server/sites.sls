@@ -62,7 +62,7 @@ nginx_init_{{ site.host.name }}_tls_{{ loop.index }}:
 
 sites-available-{{ site_name }}:
   file.managed:
-  - name: /etc/nginx/sites-available/{{ site.type }}_{{ site.name }}.conf
+  - name: {{ server.vhost_dir }}/{{ site.type }}_{{ site.name }}.conf
   {%- if site.type == 'nginx_proxy' %}
   - source: salt://nginx/files/proxy.conf
   {%- elif site.type == 'nginx_redirect' %}
@@ -82,18 +82,22 @@ sites-available-{{ site_name }}:
   - defaults:
     site_name: "{{ site_name }}"
 
+{%- if grains.os_family == 'Debian' %}
 sites-enabled-{{ site_name }}:
   file.symlink:
   - name: /etc/nginx/sites-enabled/{{ site.type }}_{{ site.name }}.conf
-  - target: /etc/nginx/sites-available/{{ site.type }}_{{ site.name }}.conf
+  - target: {{ server.vhost_dir }}/{{ site.type }}_{{ site.name }}.conf
+{%- endif %}
 
 {%- else %}
 
-/etc/nginx/sites-available/{{ site.type }}_{{ site.name }}.conf:
+{{ server.vhost_dir }}/{{ site.type }}_{{ site.name }}.conf:
   file.absent
 
+{%- if grains.os_family == 'Debian' %}
 /etc/nginx/sites-enabled/{{ site.type }}_{{ site.name }}.conf:
   file.absent
+{%- endif %}
 
 {%- endif %}
 {%- endfor %}

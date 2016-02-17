@@ -3,12 +3,14 @@
     'Debian': {
         'pkgs': ['nginx', 'apache2-utils'],
         'service': 'nginx',
+        'user': 'www-data',
         'vhost_dir': '/etc/nginx/sites-available',
         'log_dir': '/var/log/nginx',
     },
     'RedHat': {
         'pkgs': ['nginx', 'httpd-tools'],
         'service': 'nginx',
+        'user': 'nginx',
         'vhost_dir': '/etc/nginx/conf.d',
         'log_dir': '/var/log/nginx',
     },
