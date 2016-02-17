@@ -28,6 +28,7 @@ nginx_extra_packages:
 /etc/nginx/nginx.conf:
   file.managed:
   - source: salt://nginx/files/nginx.conf
+  - template: jinja
   - require:
     - pkg: nginx_packages
   - watch_in:
