@@ -6,4 +6,10 @@
         'vhost_dir': '/etc/nginx/sites-available',
         'log_dir': '/var/log/nginx',
     },
+    'RedHat': {
+        'pkgs': ['nginx', 'httpd-tools'],
+        'service': 'nginx',
+        'vhost_dir': '/etc/nginx/conf.d',
+        'log_dir': '/var/log/nginx',
+    },
 }, merge=salt['pillar.get']('nginx:server')) %}
