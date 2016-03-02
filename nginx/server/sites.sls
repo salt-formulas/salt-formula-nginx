@@ -1,13 +1,16 @@
 {%- from "nginx/map.jinja" import server with context %}
 
+{%- set ssl_certificates = {} %}
+
 {%- for site_name, site in server.get('site', {}).iteritems() %}
 {%- if site.enabled %}
 
-{% if site.ssl is defined and site.ssl.enabled %}
+{%- if site.get('ssl', {'enabled': False}).enabled and site.host.name not in ssl_certificates.keys() %}
+{%- set _dummy = ssl_certificates.update({site.host.name: []}) %}
 
 {%- if site.ssl.engine is not defined %}
 
-{{ site.host.name }}_public_cert_{{ loop.index }}:
+{{ site.host.name }}_public_cert:
   file.managed:
   - name: /etc/ssl/certs/{{ site.host.name }}.crt
   {%- if site.ssl.cert is defined %}
@@ -20,7 +23,7 @@
   - watch_in:
     - service: nginx_service
 
-{{ site.host.name }}_private_key_{{ loop.index }}:
+{{ site.host.name }}_private_key:
   file.managed:
   - name: /etc/ssl/private/{{ site.host.name }}.key
   {%- if site.ssl.key is defined %}
@@ -34,7 +37,7 @@
 
 {%- if site.ssl.chain is defined or site.ssl.authority is defined %}
 
-{{ site.host.name }}_ca_chain_{{ loop.index }}:
+{{ site.host.name }}_ca_chain:
   file.managed:
   - name: /etc/ssl/certs/{{ site.host.name }}-ca-chain.crt
   {%- if site.ssl.chain is defined %}
@@ -45,7 +48,7 @@
   - require:
     - pkg: nginx_packages
 
-nginx_init_{{ site.host.name }}_tls_{{ loop.index }}:
+nginx_init_{{ site.host.name }}_tls:
   cmd.wait:
   - name: "cat /etc/ssl/certs/{{ site.host.name }}.crt /etc/ssl/certs/{{ site.host.name }}-ca-chain.crt > /etc/ssl/certs/{{ site.host.name }}-with-chain.crt"
   - watch:
