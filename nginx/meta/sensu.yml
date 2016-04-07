@@ -16,7 +16,7 @@ check:
   {%- if site.enabled %}
   {%- if site.get('check', True) %}
   remote_nginx_server_http_{{ site.host.name }}_{{ site.host.get('port', '80') }}:
-    command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_http -H {{ site.host.name }} -p {{ site.host.get('port', '80') }} -w 5 -c 10 -f follow{% if site.get('ssl', {}).get('enabled', False) %} -S{% endif %}"
+    command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_http -H {{ site.host.name }} -p {{ site.host.get('port', '80') }} -w 5 -c 10 -f follow{% if site.get('ssl', {}).get('enabled', False) %} -S{% endif %}{% if site.auth is defined %} -e 'HTTP/1.1 401 Unauthorized'{% endif %}"
     interval: 60
     occurrences: 2
     subscribers:
