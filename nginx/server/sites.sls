@@ -1,5 +1,10 @@
 {%- from "nginx/map.jinja" import server with context %}
 
+{%- if pillar.salt.minion.cert is defined %}
+include:
+- salt.minion.cert
+{%- endif %}
+
 {%- set ssl_certificates = {} %}
 
 {%- for site_name, site in server.get('site', {}).iteritems() %}
@@ -58,6 +63,17 @@ nginx_init_{{ site.host.name }}_tls:
     - service: nginx_service
 
 {%- endif %}
+
+{%- elif site.ssl.engine == 'salt' %}
+
+nginx_init_{{ site.host.name }}_tls:
+  cmd.wait:
+  - name: "cat /etc/ssl/certs/{{ site.host.name }}.crt /etc/ssl/certs/ca-{{ site.ssl.authority }}.crt > /etc/ssl/certs/{{ site.host.name }}-with-chain.crt"
+  - watch:
+    - x509: /etc/ssl/certs/{{ site.host.name }}.crt
+    - x509: /etc/ssl/certs/ca-{{ site.ssl.authority }}.crt
+  - watch_in:
+    - service: nginx_service
 
 {%- endif %}
 
