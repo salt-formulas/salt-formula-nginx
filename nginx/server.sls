@@ -40,7 +40,7 @@ nginx_service:
   - require:
     - pkg: nginx_packages
 
-generate_dhparams:
+nginx_generate_dhparams:
   cmd.run:
   - name: openssl dhparam -out /etc/ssl/dhparams.pem 2048
   - creates: /etc/ssl/dhparams.pem
