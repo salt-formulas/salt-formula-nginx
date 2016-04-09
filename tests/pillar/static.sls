@@ -1,4 +1,6 @@
-
+salt:
+  minion:
+    enabled: true
 nginx:
   server:
     enabled: true
