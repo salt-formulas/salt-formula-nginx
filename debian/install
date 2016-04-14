@@ -1,2 +1,0 @@
-nginx/*             /usr/share/salt-formulas/env/nginx/
-metadata/service/*  /usr/share/salt-formulas/reclass/service/nginx/
