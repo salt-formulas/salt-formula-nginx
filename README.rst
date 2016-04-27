@@ -52,6 +52,28 @@ Simple static HTTP site
               name: gitlab.domain.com
               port: 80
 
+Static site with access policy
+
+.. code-block:: yaml
+
+    nginx:
+      server:
+        site:
+          nginx_static_site01:
+            enabled: true
+            type: static
+            name: site01
+            access_policy:
+              allow:
+              - 192.168.1.1/24
+              - 127.0.0.1
+              deny:
+              - 192.168.1.2
+              - all
+            host:
+              name: gitlab.domain.com
+              port: 80
+
 Simple HTTP proxy
 
 .. code-block:: yaml
@@ -110,6 +132,32 @@ Content filtering proxy
               filter:
                 search: https://www.domain.com
                 replace: http://10.10.10.10
+            host:
+              name: gitlab.domain.com
+              port: 80
+
+Proxy with access policy
+
+.. code-block:: yaml
+
+    nginx:
+      server:
+        site:
+          nginx_proxy_site01:
+            enabled: true
+            type: proxy
+            name: site01
+            access_policy:
+              allow:
+              - 192.168.1.1/24
+              - 127.0.0.1
+              deny:
+              - 192.168.1.2
+              - all
+            proxy:
+              host: local.domain.com
+              port: 80
+              protocol: http
             host:
               name: gitlab.domain.com
               port: 80
