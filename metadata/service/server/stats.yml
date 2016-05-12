@@ -1,0 +1,11 @@
+parameters:
+  nginx:
+    server:
+      site:
+        nginx_stats_server:
+          enabled: true
+          type: nginx_stats
+          name: stats
+          host:
+            name: 127.0.0.1
+            port: 8888
