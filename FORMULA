@@ -1,0 +1,8 @@
+name: nginx
+os: Debian, RedHat
+os_family: Debian, RedHat
+version: 201606
+release: 1
+summary: Nginx Salt formula
+description: Install and configure nginx server.
+top_level_dir: nginx
