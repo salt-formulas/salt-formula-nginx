@@ -1,10 +1,5 @@
 {%- from "nginx/map.jinja" import server with context %}
 
-{%- if pillar.salt.minion.cert is defined %}
-include:
-- salt.minion.cert
-{%- endif %}
-
 {%- set ssl_certificates = {} %}
 
 {%- for site_name, site in server.get('site', {}).iteritems() %}
