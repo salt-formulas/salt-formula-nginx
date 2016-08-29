@@ -8,6 +8,8 @@ nginx:
     bind:
       address: 127.0.0.1
       protocol: tcp
+    worker:
+      limit_nofile: 30000
     site:
       nginx_static_site01:
         enabled: true
