@@ -62,9 +62,9 @@ nginx_init_{{ site.host.name }}_tls:
 {%- elif site.ssl.engine == 'salt' %}
 
 nginx_init_{{ site.host.name }}_tls:
-  cmd.wait:
+  cmd.run:
   - name: "cat /etc/ssl/certs/{{ site.host.name }}.crt /etc/ssl/certs/ca-{{ site.ssl.authority }}.crt > /etc/ssl/certs/{{ site.host.name }}-with-chain.crt"
-  - watch:
+  - require:
     - x509: /etc/ssl/certs/{{ site.host.name }}.crt
     - x509: /etc/ssl/certs/ca-{{ site.ssl.authority }}.crt
   - watch_in:
