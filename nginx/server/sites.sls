@@ -64,9 +64,6 @@ nginx_init_{{ site.host.name }}_tls:
 nginx_init_{{ site.host.name }}_tls:
   cmd.run:
   - name: "cat /etc/ssl/certs/{{ site.host.name }}.crt /etc/ssl/certs/ca-{{ site.ssl.authority }}.crt > /etc/ssl/certs/{{ site.host.name }}-with-chain.crt"
-  - require:
-    - x509: /etc/ssl/certs/{{ site.host.name }}.crt
-    - x509: /etc/ssl/certs/ca-{{ site.ssl.authority }}.crt
   - watch_in:
     - service: nginx_service
 
