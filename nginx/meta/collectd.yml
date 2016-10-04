@@ -1,7 +1,6 @@
 
 plugin:
-  collectd_nginx:
+  nginx_server_status:
     plugin: nginx
-    interval: 60
-    template: collectd/files/collectd_nginx.conf
-
+    execution: local
+    template: nginx/files/collectd_nginx.conf
