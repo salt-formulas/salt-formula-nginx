@@ -224,6 +224,21 @@ Let's Encrypt
               name: gitlab.domain.com
               port: 443
 
+SSL using already deployed key and cert file.
+Note that cert file should already contain CA cert and complete chain.
+
+.. code-block:: yaml
+
+    nginx:
+      server:
+        enabled: true
+        site:
+          mysite:
+            ssl:
+              enabled: true
+              key_file: /etc/ssl/private/mykey.key
+              cert_file: /etc/ssl/cert/mycert.crt
+
 Nginx stats server (required by collectd nginx plugin)
 
 .. code-block::
