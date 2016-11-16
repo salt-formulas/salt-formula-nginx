@@ -1,6 +1,11 @@
+{%- if pillar.nginx.server is defined %}
+{%- from "nginx/map.jinja" import server with context %}
 
-plugin:
-  nginx_server_status:
+{%- if server.get('enabled', False) and server.get('site', {}).nginx_stats_server is defined %}
+local_plugin:
+  collectd_nginx:
     plugin: nginx
-    execution: local
     template: nginx/files/collectd_nginx.conf
+    url: http://localhost:{{ server.site.nginx_stats_server.host.port }}
+{%- endif %}
+{%- endif %}
