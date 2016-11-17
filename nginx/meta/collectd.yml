@@ -7,5 +7,9 @@ local_plugin:
     plugin: nginx
     template: nginx/files/collectd_nginx.conf
     url: http://localhost:{{ server.site.nginx_stats_server.host.port }}
+  collectd_nginx_check:
+    plugin: python
+    template: nginx/files/collectd_nginx_check.conf
+    url: http://localhost:{{ server.site.nginx_stats_server.host.port }}
 {%- endif %}
 {%- endif %}
