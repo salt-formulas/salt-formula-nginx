@@ -1,0 +1,3 @@
+dashboard:
+  nginx:
+    template: nginx/files/grafana_influxdb.json
