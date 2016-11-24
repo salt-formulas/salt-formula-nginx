@@ -1,0 +1,33 @@
+{%- from "nginx/map.jinja" import server with context %}
+{%- if server.get('enabled', False) and server.get('site', {}).nginx_stats_server is defined %}
+metric_collector:
+  trigger:
+    nginx_check:
+      description: 'nginx cannot be checked'
+      severity: down
+      rules:
+      - metric: nginx_check
+        relational_operator: '=='
+        threshold: 0
+        window: 60
+        periods: 0
+        function: last
+  alarm:
+    nginx_check:
+      alerting: enabled
+      triggers:
+      - nginx_check
+      dimension:
+        service: nginx
+aggregator:
+  alarm_cluster:
+    nginx_check:
+      policy: majority_of_members
+      match:
+        service: nginx
+      group_by: hostname
+      members:
+      - nginx_check
+      dimension:
+        cluster_name: nginx
+{%- endif %}
