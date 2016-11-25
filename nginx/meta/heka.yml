@@ -23,6 +23,7 @@ aggregator:
   alarm_cluster:
     nginx_check:
       policy: majority_of_members
+      alerting: enabled_with_notification
       match:
         service: nginx
       group_by: hostname
@@ -30,4 +31,5 @@ aggregator:
       - nginx_check
       dimension:
         cluster_name: nginx
+        nagios_host: 00-top-clusters
 {%- endif %}
