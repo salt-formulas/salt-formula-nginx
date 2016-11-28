@@ -1,12 +1,27 @@
 {
-  "id": 52,
-  "title": "Nginx",
-  "tags": [],
-  "style": "dark",
-  "timezone": "browser",
+  "annotations": {
+    "list": [
+      {
+        "datasource": "lma",
+        "enable": true,
+        "iconColor": "#C0C6BE",
+        "iconSize": 13,
+        "lineColor": "rgba(255, 96, 96, 0.592157)",
+        "name": "Status",
+        "query": "select title,tags,text from annotations where $timeFilter and cluster = 'nginx'",
+        "showLine": true,
+        "tagsColumn": "tags",
+        "textColumn": "text",
+        "titleColumn": "title"
+      }
+    ]
+  },
   "editable": true,
+  "gnetId": null,
   "hideControls": false,
-  "sharedCrosshair": true,
+  "id": null,
+  "links": [],
+  "refresh": "1m",
   "rows": [
     {
       "collapse": false,
@@ -88,14 +103,14 @@
               "select": [
                 [
                   {
-                    "type": "field",
                     "params": [
                       "value"
-                    ]
+                    ],
+                    "type": "field"
                   },
                   {
-                    "type": "last",
-                    "params": []
+                    "params": [],
+                    "type": "last"
                   }
                 ]
               ],
@@ -135,19 +150,19 @@
               "value": "1"
             },
             {
-              "value": "2",
               "op": "=",
-              "text": "UNKW"
+              "text": "UNKW",
+              "value": "2"
             },
             {
-              "value": "3",
               "op": "=",
-              "text": "CRIT"
+              "text": "CRIT",
+              "value": "3"
             },
             {
-              "value": "4",
               "op": "=",
-              "text": "DOWN"
+              "text": "DOWN",
+              "value": "4"
             }
           ],
           "valueName": "current"
@@ -947,6 +962,43 @@
       "title": "Metrics"
     }
   ],
+  "schemaVersion": 12,
+  "sharedCrosshair": true,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "enable": true,
+    "list": [
+      {
+        "allFormat": "regex values",
+        "current": {},
+        "datasource": null,
+        "hide": 0,
+        "includeAll": false,
+        "name": "environment",
+        "options": [],
+        "query": "show tag values from nginx_requests with key = environment_label",
+        "refresh": 1,
+        "refresh_on_load": true,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "allFormat": "glob",
+        "current": {},
+        "datasource": null,
+        "hide": 0,
+        "includeAll": false,
+        "name": "server",
+        "options": [],
+        "query": "show tag values from nginx_requests with key = hostname where environment_label =~ /^$environment$/",
+        "refresh": 1,
+        "refresh_on_load": true,
+        "regex": "",
+        "type": "query"
+      }
+    ]
+  },
   "time": {
     "from": "now-1h",
     "to": "now"
@@ -982,77 +1034,7 @@
     ],
     "type": "timepicker"
   },
-  "templating": {
-    "enable": true,
-    "list": [
-      {
-        "allFormat": "regex values",
-        "current": {
-          "text": "mk20-stacklight-basic.local",
-          "value": "mk20-stacklight-basic.local"
-        },
-        "datasource": null,
-        "hide": 0,
-        "includeAll": false,
-        "name": "environment",
-        "options": [
-          {
-            "text": "mk20-stacklight-basic.local",
-            "value": "mk20-stacklight-basic.local",
-            "selected": true
-          }
-        ],
-        "query": "show tag values from nginx_requests with key = environment_label",
-        "refresh": 1,
-        "refresh_on_load": true,
-        "regex": "",
-        "type": "query"
-      },
-      {
-        "allFormat": "glob",
-        "current": {
-          "text": "prx01",
-          "value": "prx01"
-        },
-        "datasource": null,
-        "hide": 0,
-        "includeAll": false,
-        "name": "server",
-        "options": [
-          {
-            "text": "prx01",
-            "value": "prx01",
-            "selected": true
-          }
-        ],
-        "query": "show tag values from nginx_requests with key = hostname where environment_label =~ /^$environment$/",
-        "refresh": 1,
-        "refresh_on_load": true,
-        "regex": "",
-        "type": "query"
-      }
-    ]
-  },
-  "annotations": {
-    "list": [
-      {
-        "datasource": "lma",
-        "enable": true,
-        "iconColor": "#C0C6BE",
-        "iconSize": 13,
-        "lineColor": "rgba(255, 96, 96, 0.592157)",
-        "name": "Status",
-        "query": "select title,tags,text from annotations where $timeFilter and cluster = 'nginx'",
-        "showLine": true,
-        "tagsColumn": "tags",
-        "textColumn": "text",
-        "titleColumn": "title"
-      }
-    ]
-  },
-  "refresh": "1m",
-  "schemaVersion": 12,
-  "version": 6,
-  "links": [],
-  "gnetId": null
+  "timezone": "browser",
+  "title": "Nginx",
+  "version": 7
 }
