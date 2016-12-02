@@ -21,7 +21,7 @@ metric_collector:
         service: nginx
 aggregator:
   alarm_cluster:
-    nginx_check:
+    nginx:
       policy: availability_of_members
       alerting: enabled_with_notification
       match:
