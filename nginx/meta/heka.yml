@@ -18,15 +18,25 @@ metric_collector:
       triggers:
       - nginx_check
       dimension:
-        service: nginx
+        service: nginx-check
 aggregator:
   alarm_cluster:
-    nginx:
+    nginx_check:
       policy: availability_of_members
+      alerting: enabled
+      match:
+        service: nginx-check
+      group_by: hostname
+      members:
+      - nginx_check
+      dimension:
+        cluster_name: nginx
+        nagios_host: 01-service-clusters
+    nginx:
+      policy: highest_severity
       alerting: enabled_with_notification
       match:
         service: nginx
-      group_by: hostname
       members:
       - nginx_check
       dimension:
