@@ -1,0 +1,73 @@
+---
+driver:
+  name: vagrant
+  vm_hostname: nginx.ci.local
+  use_sudo: false
+  customize:
+    memory: 512
+
+
+provisioner:
+  name: salt_solo
+  salt_install: bootstrap
+  salt_bootstrap_url: https://bootstrap.saltstack.com
+  salt_version: latest
+  formula: nginx
+  log_level: info
+  state_top:
+    base:
+      "*":
+        - nginx
+  pillars:
+    top.sls:
+      base:
+        "*":
+          - nginx
+  grains:
+    noservices: False
+
+
+verifier:
+  name: inspec
+  sudo: true
+
+
+platforms:
+  - name: ubuntu-14.04
+  - name: ubuntu-16.04
+  - name: centos-7.1
+
+
+suites:
+
+  - name: horizon_no_ssl
+    provisioner:
+      pillars-from-files:
+        nginx.sls: tests/pillar/horizon_no_ssl.sls
+
+  - name: horizon_with_ssl
+    provisioner:
+      pillars-from-files:
+        nginx.sls: tests/pillar/horizon_with_ssl.sls
+
+  - name: proxy
+    provisioner:
+      pillars-from-files:
+        nginx.sls: tests/pillar/proxy.sls
+
+  - name: redirect
+    provisioner:
+      pillars-from-files:
+        nginx.sls: tests/pillar/redirect.sls
+
+  - name: static
+    provisioner:
+      pillars-from-files:
+        nginx.sls: tests/pillar/static.sls
+
+  - name: stats
+    provisioner:
+      pillars-from-files:
+        nginx.sls: tests/pillar/stats.sls
+
+# vim: ft=yaml sw=2 ts=2 sts=2 tw=125
