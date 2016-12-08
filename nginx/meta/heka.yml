@@ -36,7 +36,7 @@ aggregator:
       policy: highest_severity
       alerting: enabled_with_notification
       match:
-        service: nginx
+        service: nginx-check
       members:
       - nginx_check
       dimension:
