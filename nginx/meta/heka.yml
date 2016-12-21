@@ -30,13 +30,13 @@ aggregator:
       members:
       - nginx_check
       dimension:
-        cluster_name: nginx
+        service: nginx
         nagios_host: 01-service-clusters
     nginx:
       policy: highest_severity
       alerting: enabled_with_notification
       match:
-        service: nginx-check
+        service: nginx
       members:
       - nginx_check
       dimension:
