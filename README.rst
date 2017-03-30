@@ -241,7 +241,7 @@ Note that cert file should already contain CA cert and complete chain.
 
 Nginx stats server (required by collectd nginx plugin)
 
-.. code-block::
+.. code-block:: yaml
 
     nginx:
       server:
