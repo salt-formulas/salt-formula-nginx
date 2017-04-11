@@ -1,11 +1,11 @@
 
-=====
-Nginx
-=====
+=============
+Nginx Formula
+=============
 
 Nginx is an open source reverse proxy server for HTTP, HTTPS, SMTP, POP3, and IMAP protocols, as well as a load balancer, HTTP cache, and a web server (origin server). The nginx project started with a strong focus on high concurrency, high performance and low memory usage.
 
-Sample pillars
+Sample Pillars
 ==============
 
 Gitlab server setup
@@ -241,7 +241,7 @@ Note that cert file should already contain CA cert and complete chain.
 
 Nginx stats server (required by collectd nginx plugin)
 
-.. code-block::
+.. code-block:: yaml
 
     nginx:
       server:
@@ -255,13 +255,15 @@ Nginx stats server (required by collectd nginx plugin)
               name: 127.0.0.1
               port: 8888
 
-Read more
-=========
+
+More Information
+================
 
 * http://wiki.nginx.org/Main
 * https://wiki.mozilla.org/Security/Server_Side_TLS#Modern_compatibility
 * http://nginx.com/resources/admin-guide/reverse-proxy/
 * https://mozilla.github.io/server-side-tls/ssl-config-generator/
+
 
 Documentation and Bugs
 ======================
