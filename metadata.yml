@@ -1,3 +1,6 @@
 name: "nginx"
 version: "0.2"
-source: "https://github.com/tcpcloud/salt-formula-nginx"
+source: "https://github.com/salt-formulas/salt-formula-nginx"
+dependencies:
+  - name: salt
+    source: "https://github.com/salt-formulas/salt-formula-salt"
