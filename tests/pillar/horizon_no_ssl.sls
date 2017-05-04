@@ -15,4 +15,11 @@ nginx:
         name: site01
         host:
           name: horizon.domain.com
-
+horizon:
+  server:
+    enabled: true
+    secret_key: secret
+    app:
+      site01:
+        bind:
+          port: 80

@@ -75,6 +75,7 @@ nginx_init_{{ site.host.name }}_tls:
 
 {% endif %}
 
+
 sites-available-{{ site_name }}:
   file.managed:
   - name: {{ server.vhost_dir }}/{{ site.type }}_{{ site.name }}.conf
@@ -97,13 +98,14 @@ sites-available-{{ site_name }}:
   - defaults:
     site_name: "{{ site_name }}"
 
+
+
 {%- if grains.os_family == 'Debian' %}
 sites-enabled-{{ site_name }}:
   file.symlink:
   - name: /etc/nginx/sites-enabled/{{ site.type }}_{{ site.name }}.conf
   - target: {{ server.vhost_dir }}/{{ site.type }}_{{ site.name }}.conf
 {%- endif %}
-
 {%- else %}
 
 {{ server.vhost_dir }}/{{ site.type }}_{{ site.name }}.conf:
