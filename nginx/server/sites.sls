@@ -75,7 +75,6 @@ nginx_init_{{ site.host.name }}_tls:
 
 {% endif %}
 
-{%- if grains.get('virtual_subtype', None) not in ['Docker', 'LXC'] %}
 
 sites-available-{{ site_name }}:
   file.managed:
@@ -106,7 +105,6 @@ sites-enabled-{{ site_name }}:
   file.symlink:
   - name: /etc/nginx/sites-enabled/{{ site.type }}_{{ site.name }}.conf
   - target: {{ server.vhost_dir }}/{{ site.type }}_{{ site.name }}.conf
-{%- endif %}
 {%- endif %}
 {%- else %}
 

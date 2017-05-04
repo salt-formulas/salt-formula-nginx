@@ -14,6 +14,10 @@ provisioner:
   formula: nginx
   grains:
     noservices: True
+  dependencies:
+    - name: horizon
+      repo: git
+      source: https://github.com/salt-formulas/salt-formula-horizon
   state_top:
     base:
       "*":
