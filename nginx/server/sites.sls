@@ -75,8 +75,9 @@
 {% endif %}
 
 nginx_init_{{ site.host.name }}_tls:
-  cmd.wait:
+  cmd.run:
   - name: "cat {{ cert_file }} {{ ca_file }} > {{ chain_file }}"
+  - creates: {{ chain_file }}
   - watch_in:
     - service: nginx_service
 
