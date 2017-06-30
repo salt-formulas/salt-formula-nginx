@@ -1,8 +1,14 @@
 dashboard:
-  nginx:
+  nginx_influxdb:
+    datasource: influxdb
     format: json
     template: nginx/files/grafana_dashboards/nginx_influxdb.json
+  nginx_prometheus:
+    datasource: prometheus
+    format: json
+    template: nginx/files/grafana_dashboards/nginx_prometheus.json
   main:
+    datasource: influxdb
     row:
       ost-middleware:
         title: Middleware
