@@ -46,7 +46,7 @@ Simple static HTTP site
         site:
           nginx_static_site01:
             enabled: true
-            type: static
+            type: nginx_static
             name: site01
             host:
               name: gitlab.domain.com
@@ -61,7 +61,7 @@ Static site with access policy
         site:
           nginx_static_site01:
             enabled: true
-            type: static
+            type: nginx_static
             name: site01
             access_policy:
               allow:
@@ -83,7 +83,7 @@ Simple HTTP proxy
         site:
           nginx_proxy_site01:
             enabled: true
-            type: proxy
+            type: nginx_proxy
             name: site01
             proxy:
               host: local.domain.com
@@ -102,7 +102,7 @@ Simple Websocket proxy
         site:
           nginx_proxy_site02:
             enabled: true
-            type: proxy
+            type: nginx_proxy
             name: site02
             proxy:
               websocket: true
@@ -123,7 +123,7 @@ Content filtering proxy
         site:
           nginx_proxy_site03:
             enabled: true
-            type: proxy
+            type: nginx_proxy
             name: site03
             proxy:
               host: local.domain.com
@@ -145,7 +145,7 @@ Proxy with access policy
         site:
           nginx_proxy_site01:
             enabled: true
-            type: proxy
+            type: nginx_proxy
             name: site01
             access_policy:
               allow:
@@ -192,7 +192,7 @@ Proxy buffering
         site:
           gitlab_proxy:
             enabled: true
-            type: proxy
+            type: nginx_proxy
             proxy:
               buffer:
                 number: 8
