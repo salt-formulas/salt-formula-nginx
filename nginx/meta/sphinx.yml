@@ -7,7 +7,7 @@ doc:
       name: Server
       param:
         version:
-          value: "{{ salt['cmd.run']('nginx -v')|replace("nginx version: ", '') }}"
+          value: "{{ salt['cmd.run']('nginx -v 2>/dev/null || echo "unknown"')|replace("nginx version: ", '') }}"
         bind_host:
           name: Bind host
           value: {{ server.bind.address }}
