@@ -19,8 +19,8 @@
           "colorValue": true,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
+            "rgba(40, 237, 55, 0.89)",
+            "rgba(255, 0, 0, 0.97)"
           ],
           "datasource": "prometheus",
           "format": "none",
@@ -214,20 +214,20 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "irate(nginx_connections_accepted{host=~\"$host\"}[1m])",
+              "expr": "irate(nginx_accepts{host=~\"$host\"}[1m])",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "accepted",
-              "metric": "nginx_connections_accepted",
+              "metric": "nginx_accepts",
               "refId": "A",
               "step": 2
             },
             {
-              "expr": "irate(nginx_connections_handled{host=~\"$host\"}[1m])",
+              "expr": "irate(nginx_handled{host=~\"$host\"}[1m])",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "handled",
-              "metric": "nginx_connections_handled",
+              "metric": "nginx_handled",
               "refId": "B",
               "step": 2
             }
@@ -319,11 +319,11 @@
           },
           "targets": [
             {
-              "expr": "nginx_connections_active{host=~\"$host\"}",
+              "expr": "nginx_active{host=~\"$host\"}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{ host }}",
-              "metric": "nginx_connections_active",
+              "metric": "nginx_active",
               "refId": "A",
               "step": 2
             }
@@ -398,11 +398,11 @@
           },
           "targets": [
             {
-              "expr": "nginx_connections_reading{host=~\"$host\"}",
+              "expr": "nginx_reading{host=~\"$host\"}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{ host }}",
-              "metric": "nginx_connections_reading",
+              "metric": "nginx_reading",
               "refId": "A",
               "step": 2
             }
@@ -477,11 +477,11 @@
           },
           "targets": [
             {
-              "expr": "nginx_connections_writing{host=~\"$host\"}",
+              "expr": "nginx_writing{host=~\"$host\"}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{ host }}",
-              "metric": "nginx_connections_writing",
+              "metric": "nginx_writing",
               "refId": "A",
               "step": 2
             }
@@ -556,11 +556,11 @@
           },
           "targets": [
             {
-              "expr": "nginx_connections_waiting{host=~\"$host\"}",
+              "expr": "nginx_waiting{host=~\"$host\"}",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{ host }}",
-              "metric": "nginx_connections_waiting",
+              "metric": "nginx_waiting",
               "refId": "A",
               "step": 2
             }
