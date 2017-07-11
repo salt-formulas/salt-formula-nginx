@@ -1,0 +1,10 @@
+{%- if pillar.nginx.server is defined %}
+{%- from "nginx/map.jinja" import server with context %}
+{%- if server.get('enabled', False) and server.get('site', {}).nginx_stats_server is defined %}
+agent:
+  input:
+    nginx:
+      template: nginx/files/telegraf.conf
+      urls: http://localhost:{{ server.site.nginx_stats_server.host.port }}
+{%- endif %}
+{%- endif %}
