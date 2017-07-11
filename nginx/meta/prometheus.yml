@@ -1,0 +1,16 @@
+{%- from "nginx/map.jinja" import server with context %}
+{%- if server.get('enabled', False) %}
+{%- raw %}
+server:
+  alert:
+    NginxDown:
+      if: >-
+        nginx_up != 1
+      labels:
+        severity: warning
+        service: nginx
+      annotations:
+        summary: 'Nginx service down'
+        description: 'Nginx service is down on node {{ $labels.host }}'
+{%- endraw %}
+{%- endif %}
