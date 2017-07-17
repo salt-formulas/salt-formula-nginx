@@ -17,15 +17,25 @@ install:
   - bundle install
 
 env:
-    - PLATFORM=trevorj/salty-whales:trusty
-    - PLATFORM=trevorj/salty-whales:xenial
+    - PLATFORM=trevorj/salty-whales:trusty SUITE=horizon_no_ssl
+    - PLATFORM=trevorj/salty-whales:xenial SUITE=horizon_no_ssl
+    - PLATFORM=trevorj/salty-whales:trusty SUITE=horizon_with_ssl
+    - PLATFORM=trevorj/salty-whales:xenial SUITE=horizon_with_ssl
+    - PLATFORM=trevorj/salty-whales:trusty SUITE=proxy
+    - PLATFORM=trevorj/salty-whales:xenial SUITE=proxy
+    - PLATFORM=trevorj/salty-whales:trusty SUITE=redirect
+    - PLATFORM=trevorj/salty-whales:xenial SUITE=redirect
+    - PLATFORM=trevorj/salty-whales:trusty SUITE=static
+    - PLATFORM=trevorj/salty-whales:xenial SUITE=static
+    - PLATFORM=trevorj/salty-whales:trusty SUITE=stats
+    - PLATFORM=trevorj/salty-whales:xenial SUITE=stats
 
 before_script:
   - set -o pipefail
   - make test | tail
 
 script:
-  - test ! -e .kitchen.yml || bundle exec kitchen test -t tests/integration
+  - KITCHEN_LOCAL_YAML=.kitchen.travis.yml bundle exec kitchen test -t tests/integration
 
 notifications:
   webhooks:
