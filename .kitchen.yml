@@ -50,6 +50,11 @@ suites:
       pillars-from-files:
         nginx.sls: tests/pillar/horizon_with_ssl.sls
 
+  - name: horizon_with_ssl_options
+    provisioner:
+      pillars-from-files:
+        nginx.sls: tests/pillar/horizon_with_ssl_options.sls
+
   - name: proxy
     provisioner:
       pillars-from-files:
