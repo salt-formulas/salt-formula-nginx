@@ -52,6 +52,31 @@ Simple static HTTP site
               name: gitlab.domain.com
               port: 80
 
+Simple load balancer
+
+.. code-block:: yaml
+
+    nginx:
+      server:
+        upstream:
+          horizon-upstream:
+            backend1:
+              address: 10.10.10.113
+              port: 8078
+              opts: weight=3
+            backend2:
+              address: 10.10.10.114
+        site:
+          nginx_proxy_openstack_web:
+            enabled: true
+            type: nginx_proxy
+            name: openstack_web
+            proxy:
+              upstream_proxy_pass: http://horizon-upstream
+            host:
+              name: 192.168.0.1
+              port: 31337
+
 Static site with access policy
 
 .. code-block:: yaml

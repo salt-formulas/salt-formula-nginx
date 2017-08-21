@@ -45,6 +45,17 @@ nginx_extra_packages:
     - service: nginx_service
 {%- endif %}
 
+{%- if server.upstream is defined %}
+/etc/nginx/upstream.conf:
+  file.managed:
+  - source: salt://nginx/files/upstream.conf
+  - template: jinja
+  - require:
+    - pkg: nginx_packages
+  - watch_in:
+    - service: nginx_service
+{%- endif %}
+
 nginx_service:
   service.running:
   - name: {{ server.service }}
