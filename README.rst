@@ -74,6 +74,32 @@ Static site with access policy
               name: gitlab.domain.com
               port: 80
 
+Simple TCP/UDP proxy
+
+.. code-block:: yaml
+
+    nginx:
+      server:
+        stream:
+          rabbitmq:
+            host:
+              port: 5672
+            backend:
+              server1:
+                address: 10.10.10.113
+                port: 5672
+                least_conn: true
+                hash: "$remote_addr consistent"
+          unbound:
+            host:
+              bind: 127.0.0.1
+              port: 53
+              protocol: udp
+            backend:
+              server1:
+                address: 10.10.10.113
+                port: 5353
+
 Simple HTTP proxy
 
 .. code-block:: yaml

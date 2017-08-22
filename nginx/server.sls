@@ -34,6 +34,17 @@ nginx_extra_packages:
   - watch_in:
     - service: nginx_service
 
+{%- if server.stream is defined %}
+/etc/nginx/stream.conf:
+  file.managed:
+  - source: salt://nginx/files/stream.conf
+  - template: jinja
+  - require:
+    - pkg: nginx_packages
+  - watch_in:
+    - service: nginx_service
+{%- endif %}
+
 nginx_service:
   service.running:
   - name: {{ server.service }}
