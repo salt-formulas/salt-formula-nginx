@@ -1,4 +1,25 @@
 dashboard:
-  nginx:
+  nginx_influxdb:
+    datasource: influxdb
     format: json
     template: nginx/files/grafana_dashboards/nginx_influxdb.json
+  nginx_prometheus:
+    datasource: prometheus
+    format: json
+    template: nginx/files/grafana_dashboards/nginx_prometheus.json
+  main:
+    datasource: influxdb
+    row:
+      ost-middleware:
+        title: Middleware
+        panel:
+          nginx:
+            title: Nginx
+            links:
+            - dashboard: Nginx
+              title: Nginx
+              type: dashboard
+            target:
+              cluster_status:
+                rawQuery: true
+                query: SELECT last(value) FROM cluster_status WHERE cluster_name = 'nginx' AND environment_label = '$environment' AND $timeFilter GROUP BY time($interval) fill(null)

@@ -6,8 +6,12 @@ parameters:
       heka:
         enabled: true
       sensu:
-        enabled: true
+        enabled: false
       sphinx:
         enabled: false
       grafana:
+        enabled: true
+      prometheus:
+        enabled: true
+      telegraf:
         enabled: true
