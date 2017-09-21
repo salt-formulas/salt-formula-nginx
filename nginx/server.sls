@@ -34,7 +34,7 @@ nginx_extra_packages:
   - watch_in:
     - service: nginx_service
 
-{%- if not salt['file.directory_exists'](/etc/ssl/private) %}
+{%- if not salt['file.directory_exists']('/etc/ssl/private') %}
 /etc/ssl/private:
   file.directory:
   - mode: 0710
