@@ -39,8 +39,13 @@ nginx_extra_packages:
   file.directory:
   - mode: 0710
   - user: root
-  - group: ssl-cert
+  - group: root
   - makedirs: true
+  - require:
+    - pkg: nginx_packages
+{%- else %}
+/etc/ssl/private:
+  file.directory:
   - require:
     - pkg: nginx_packages
 {%- endif %}
