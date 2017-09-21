@@ -31,14 +31,6 @@
     - service: nginx_service
     - cmd: nginx_init_{{ site.host.name }}_tls
 
-{{ site.host.name }}_parent_folder:
-  file.directory:
-  - name: /etc/ssl/private
-  - mode: 0400
-  - user: nginx
-  - group: nginx
-  - makedirs: True
-
 {{ site.host.name }}_private_key:
   file.managed:
   - name: {{ key_file }}

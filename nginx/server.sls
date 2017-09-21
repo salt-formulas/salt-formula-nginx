@@ -34,6 +34,15 @@ nginx_extra_packages:
   - watch_in:
     - service: nginx_service
 
+/etc/ssl/private:
+  file.directory:
+  - mode: 0400
+  - user: nginx
+  - group: nginx
+  - makedirs: true
+  - require:
+    - pkg: nginx_packages
+
 {%- if server.stream is defined %}
 /etc/nginx/stream.conf:
   file.managed:
