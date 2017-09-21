@@ -8,7 +8,7 @@ parameters:
       sensu:
         enabled: false
       sphinx:
-        enabled: false
+        enabled: true
       grafana:
         enabled: true
       prometheus:
