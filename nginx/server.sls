@@ -34,6 +34,22 @@ nginx_extra_packages:
   - watch_in:
     - service: nginx_service
 
+{%- if not salt['file.directory_exists']('/etc/ssl/private') %}
+/etc/ssl/private:
+  file.directory:
+  - mode: 0710
+  - user: root
+  - group: root
+  - makedirs: true
+  - require:
+    - pkg: nginx_packages
+{%- else %}
+/etc/ssl/private:
+  file.directory:
+  - require:
+    - pkg: nginx_packages
+{%- endif %}
+
 {%- if server.stream is defined %}
 /etc/nginx/stream.conf:
   file.managed:

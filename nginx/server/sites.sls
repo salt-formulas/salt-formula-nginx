@@ -42,6 +42,7 @@
   - mode: 400
   - require:
     - pkg: nginx_packages
+    - file: /etc/ssl/private
   - watch_in:
     - cmd: nginx_init_{{ site.host.name }}_tls
 
