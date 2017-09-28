@@ -13,7 +13,7 @@ doc:
           value: {{ server.bind.address }}
       endpoint:
   {%- for site_name, site in server.get('site', {}).iteritems() %}
-  {%- if site.enabled %}
+  {%- if site.get('enabled') %}
         {{ site_name }}_{{ site.type }}:
           name: {{ site_name }}
           type: {{ site.type }}

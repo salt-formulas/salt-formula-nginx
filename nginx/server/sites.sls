@@ -3,7 +3,7 @@
 {%- set ssl_certificates = {} %}
 
 {%- for site_name, site in server.get('site', {}).iteritems() %}
-{%- if site.enabled %}
+{%- if site.get('enabled') %}
 
 {%- if site.get('ssl', {'enabled': False}).enabled and site.host.name not in ssl_certificates.keys() %}
 {%- set _dummy = ssl_certificates.update({site.host.name: []}) %}
