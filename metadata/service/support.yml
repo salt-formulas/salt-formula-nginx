@@ -1,6 +1,8 @@
 parameters:
   nginx:
     _support:
+      fluentd:
+        enabled: true
       collectd:
         enabled: true
       heka:
