@@ -1,57 +1,60 @@
-config:
-  dollar: '$'
-  label:
-    nginx:
-      input:
-        access_log:
-          type: tail
-          tag: nginx.access
-          path: /var/log/nginx/access.log
-          pos_file: /var/log/td-agent/tmp/nginx.access.pos
-          parser:
-            type: regexp
-            time_format: '%d/%b/%Y:%H:%M:%S %z'
-            time_key: Timestamp
-            keep_time_key: false
-            format: '/^(?<http_client_ip_address>[^ ]*) - (?<http_user>[^ ]*) \[(?<Timestamp>[^\]]*)\] "(?<http_method>\S+) (?<http_url>[^ ]*) \S*" (?<http_status>[^ ]*) (?<http_response_size>[^ ]*) "(?<http_referer>[^\"]*)" "(?<http_agent>[^\"]*)"$/'
-        error_log:
-          type: tail
-          tag: nginx.error
-          path: /var/log/nginx/error.log
-          pos_file: /var/log/td-agent/tmp/nginx.error.pos
-          parser:
-            type: regexp
-            time_format: '%Y/%m/%d %H:%M:%S'
-            time_key: Timestamp
-            keep_time_key: false
-            format: '/^(?<Timestamp>[^ ]+ [^ ]+) \[(?<orig_severity_label>.*)\] (?<Pid>[^\#]*)\#(?<tid>[^:]*): (?<Payload>.*)$/'
-      filter:
-        add_severity_access:
-          tag: nginx.access
-          type: record_transformer
-          record:
-            - name: severity_label
-              value: INFO
-            - name: Severity
-              value: 6
-        unify_severity_error:
-          tag: nginx.error
-          type: record_transformer
-          enable_ruby: true
-          remove_keys: orig_severity_label
-          record:
-            - name: severity_label
-              value: ${ {'debug'=>'DEBUG','info'=>'INFO','notice'=>'NOTICE','warn'=>'WARNING','error'=>'ERROR','crit'=>'CRITICAL','alert'=>'ALERT','emerg'=>'EMERGENCY'}[record['orig_severity_label']] }
-            - name: Severity
-              value: ${ {'debug'=>7,'info'=>6,'notice'=>5,'warn'=>4,'error'=>3,'crit'=>2,'alert'=>1,'emerg'=>0}[record['orig_severity_label']].to_i }
-        enrich_fields:
-          tag: nginx.*
-          type: record_transformer
-          record:
-            - name: programname
-              value: nginx
-      match:
-        push_to_default:
-          tag: nginx.*
-          type: relabel
-          label: default_output
+{%- if pillar.get('fluentd', {}).get('agent') %}
+agent:
+  config:
+    dollar: '$'
+    label:
+      nginx:
+        input:
+          access_log:
+            type: tail
+            tag: nginx.access
+            path: /var/log/nginx/access.log
+            pos_file: {{ pillar.fluentd.agent.dir.positiondb }}/nginx.access.pos
+            parser:
+              type: regexp
+              time_format: '%d/%b/%Y:%H:%M:%S %z'
+              time_key: Timestamp
+              keep_time_key: false
+              format: '/^(?<http_client_ip_address>[^ ]*) - (?<http_user>[^ ]*) \[(?<Timestamp>[^\]]*)\] "(?<http_method>\S+) (?<http_url>[^ ]*) \S*" (?<http_status>[^ ]*) (?<http_response_size>[^ ]*) "(?<http_referer>[^\"]*)" "(?<http_agent>[^\"]*)"$/'
+          error_log:
+            type: tail
+            tag: nginx.error
+            path: /var/log/nginx/error.log
+            pos_file: {{ pillar.fluentd.agent.dir.positiondb }}/nginx.error.pos
+            parser:
+              type: regexp
+              time_format: '%Y/%m/%d %H:%M:%S'
+              time_key: Timestamp
+              keep_time_key: false
+              format: '/^(?<Timestamp>[^ ]+ [^ ]+) \[(?<orig_severity_label>.*)\] (?<Pid>[^\#]*)\#(?<tid>[^:]*): (?<Payload>.*)$/'
+        filter:
+          add_severity_access:
+            tag: nginx.access
+            type: record_transformer
+            record:
+              - name: severity_label
+                value: INFO
+              - name: Severity
+                value: 6
+          unify_severity_error:
+            tag: nginx.error
+            type: record_transformer
+            enable_ruby: true
+            remove_keys: orig_severity_label
+            record:
+              - name: severity_label
+                value: ${ {'debug'=>'DEBUG','info'=>'INFO','notice'=>'NOTICE','warn'=>'WARNING','error'=>'ERROR','crit'=>'CRITICAL','alert'=>'ALERT','emerg'=>'EMERGENCY'}[record['orig_severity_label']] }
+              - name: Severity
+                value: ${ {'debug'=>7,'info'=>6,'notice'=>5,'warn'=>4,'error'=>3,'crit'=>2,'alert'=>1,'emerg'=>0}[record['orig_severity_label']].to_i }
+          enrich_fields:
+            tag: nginx.*
+            type: record_transformer
+            record:
+              - name: programname
+                value: nginx
+        match:
+          push_to_default:
+            tag: nginx.*
+            type: relabel
+            label: default_output
+{%- endif %}
