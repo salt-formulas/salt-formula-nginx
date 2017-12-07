@@ -245,6 +245,7 @@ Proxy buffering
             enabled: true
             type: nginx_proxy
             proxy:
+              request_buffer: false
               buffer:
                 number: 8
                 size: 16
