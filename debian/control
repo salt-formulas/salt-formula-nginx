@@ -10,6 +10,6 @@ Vcs-Git: https://github.com/tcpcloud/salt-formula-nginx.git
 
 Package: salt-formula-nginx
 Architecture: all
-Depends: ${misc:Depends}, salt-master, reclass
+Depends: ${misc:Depends}
 Description: Nginx Salt formula
  Install and configure nginx server.
