@@ -79,4 +79,9 @@ suites:
     provisioner:
       pillars-from-files:
         nginx.sls: tests/pillar/stats.sls
+
+  - name: proxy_with_ssl
+    provisioner:
+      pillars-from-files:
+        nginx.sls: tests/pillar/proxy_with_ssl.sls
 # vim: ft=yaml sw=2 ts=2 sts=2 tw=125

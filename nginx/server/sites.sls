@@ -5,6 +5,42 @@
 {%- for site_name, site in server.get('site', {}).iteritems() %}
 {%- if site.get('enabled') %}
 
+{%- if site.get('ssl', {'enabled': False}).enabled %}
+{%- if site.ssl.get('dhparam', {'enabled': False}).enabled %}
+nginx_generate_{{ site_name }}_dhparams:
+  cmd.run:
+  - name: openssl dhparam -out /etc/ssl/dhparams_{{ site_name }}.pem {% if site.ssl.dhparam.numbits is defined %}{{ site.ssl.dhparam.numbits }}{% else %}2048{% endif %}
+  - unless: "test -f /etc/ssl/dhparams_{{ site_name }}.pem && [ $(openssl dhparam -inform PEM -in /etc/ssl/dhparams_{{ site_name }}.pem -check -text | grep -Po 'DH Parameters: \\(\\K[0-9]+') = {% if site.ssl.dhparam.numbits is defined %}{{ site.ssl.dhparam.numbits }}{% else %}2048{% endif %} ]"
+  - require:
+    - pkg: nginx_packages
+  - watch_in:
+    - service: nginx_service
+{% endif %}
+
+{%- if site.ssl.get('ticket_key', {'enabled': False}).enabled %}
+nginx_generate_{{ site_name }}_ticket_key:
+  cmd.run:
+  - name: openssl rand {% if site.ssl.ticket_key.numbytes is defined %}{{ site.ssl.ticket_key.numbytes }}{% else %}48{% endif %} > /etc/ssl/ticket_{{ site_name }}.key
+  - unless: "test -f /etc/ssl/ticket_{{ site_name }}.key && [ $(wc -c < /etc/ssl/ticket_{{ site_name }}.key) = {% if site.ssl.ticket_key.numbytes is defined %}{{ site.ssl.ticket_key.numbytes }}{% else %}48{% endif %} ]"
+  - require:
+    - pkg: nginx_packages
+  - watch_in:
+    - service: nginx_service
+{% endif %}
+
+{%- if site.ssl.get('password_file', {'enabled': False}).enabled and site.ssl.password_file.file is not defined and site.ssl.password_file.content is defined %}
+/etc/ssl/password_{{ site_name }}.key:
+  file.managed:
+  - contents_pillar: nginx:server:site:{{ site_name }}:ssl:password_file:content
+  - require:
+    - pkg: nginx_packages
+  - watch_in:
+    - service: nginx_service
+{% endif %}
+{% endif %}
+
+
+
 {%- if site.get('ssl', {'enabled': False}).enabled and site.host.name not in ssl_certificates.keys() %}
 {%- set _dummy = ssl_certificates.update({site.host.name: []}) %}
 
@@ -85,8 +121,8 @@ nginx_init_{{ site.host.name }}_tls:
   - watch_in:
     - service: nginx_service
 
-{% endif %}
 
+{% endif %}
 
 sites-available-{{ site_name }}:
   file.managed:

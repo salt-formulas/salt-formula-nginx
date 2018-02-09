@@ -1,14 +1,14 @@
 
 {% set server = salt['grains.filter_by']({
     'Debian': {
-        'pkgs': ['nginx', 'apache2-utils'],
+        'pkgs': ['nginx', 'apache2-utils', 'openssl'],
         'service': 'nginx',
         'system_user': 'www-data',
         'vhost_dir': '/etc/nginx/sites-available',
         'log_dir': '/var/log/nginx',
     },
     'RedHat': {
-        'pkgs': ['nginx', 'httpd-tools'],
+        'pkgs': ['nginx', 'httpd-tools', 'openssl'],
         'service': 'nginx',
         'system_user': 'nginx',
         'vhost_dir': '/etc/nginx/conf.d',

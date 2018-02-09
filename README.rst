@@ -378,6 +378,81 @@ Note that cert file should already contain CA cert and complete chain.
               key_file: /etc/ssl/private/mykey.key
               cert_file: /etc/ssl/cert/mycert.crt
 
+Advanced SSL configuration, more information about SSL option may be found
+at http://nginx.org/en/docs/http/ngx_http_ssl_module.html
+!Note that prior to nginx 1.11.0 only one type of ecdh curve can be applied in ssl_ecdh_curve directive
+!!Please note that if mode = 'secure' or mode = 'normal' and 'ciphers' or 'protocols' are set - they should have
+type "string", if mode = 'manual', their type should be "dict" (like shown below)
+
+.. code-block:: yaml
+
+    nginx:
+      server:
+        enabled: true
+        site:
+          mysite:
+            ssl:
+              enabled: true
+              mode: 'manual'
+              key_file:  /srv/salt/pki/${_param:cluster_name}/${salt:minion:cert:proxy:common_name}.key
+              cert_file: /srv/salt/pki/${_param:cluster_name}/${salt:minion:cert:proxy:common_name}.crt
+              chain_file: /srv/salt/pki/${_param:cluster_name}/${salt:minion:cert:proxy:common_name}-with-chain.crt
+              protocols:
+                TLS1:
+                  name: 'TLSv1'
+                  enabled: True
+                TLS1_1:
+                  name: 'TLSv1.1'
+                  enabled: True
+                TLS1_2:
+                  name: 'TLSv1.2'
+                  enabled: False
+              ciphers:
+                ECDHE_RSA_AES256_GCM_SHA384:
+                  name: 'ECDHE-RSA-AES256-GCM-SHA384'
+                  enabled: True
+                ECDHE_ECDSA_AES256_GCM_SHA384:
+                  name: 'ECDHE-ECDSA-AES256-GCM-SHA384'
+                  enabled: True
+              buffer_size: '16k'
+              crl:
+                file: '/etc/ssl/crl.pem'
+                enabled: False
+              dhparam:
+                enabled: True
+                numbits: 2048
+              ecdh_curve:
+                secp384r1:
+                  name: 'secp384r1'
+                  enabled: False
+                secp521r1:
+                  name: 'secp521r1'
+                  enabled: True
+              password_file:
+                content: 'testcontent22'
+                enabled: True
+                file: '/etc/ssl/password.key'
+              prefer_server_ciphers: 'on'
+              ticket_key:
+                enabled: True
+                numbytes: 48
+              resolver:
+                address: '127.0.0.1'
+                valid_seconds: '500'
+                timeout_seconds: '60'
+              session_tickets: 'on'
+              stapling: 'off'
+              stapling_file: '/path/to/stapling/file'
+              stapling_responder: 'http://ocsp.example.com/'
+              stapling_verify: 'on'
+              verify_client: 'on'
+              client_certificate:
+                file: '/etc/ssl/client_cert.pem'
+                enabled: False
+              verify_depth: 1
+              session_cache: 'shared:SSL:15m'
+              session_timeout: '15m'
+
 Nginx stats server (required by collectd nginx plugin)
 
 .. code-block:: yaml
@@ -393,27 +468,6 @@ Nginx stats server (required by collectd nginx plugin)
             host:
               name: 127.0.0.1
               port: 8888
-
-Change nginx server ssl protocol options in openstack/proxy.yml
-
-.. code-block:: yaml
-    nginx:
-      server:
-        site:
-          site01:
-            enabled: true
-            name: site01
-            host:
-              name: site01.domain.com
-            ssl:
-              enabled: true
-              key_file:  /srv/salt/pki/${_param:cluster_name}/${salt:minion:cert:proxy:common_name}.key
-              cert_file: /srv/salt/pki/${_param:cluster_name}/${salt:minion:cert:proxy:common_name}.crt
-              chain_file: /srv/salt/pki/${_param:cluster_name}/${salt:minion:cert:proxy:common_name}-with-chain.crt
-              protocols: TLSv1 TLSv1.1 TLSv1.2
-              ciphers: "ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA:ECDHE-ECDSA-DES-CBC3-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA:!DSS"
-              prefer_server_ciphers: true
-              ecdh_curve: secp521r1
 
 More Information
 ================
