@@ -1,5 +1,28 @@
 {%- from "nginx/map.jinja" import server with context %}
 {%- if server.get('enabled', False) and server.get('site', {}).nginx_stats_server is defined %}
+log_collector:
+  decoder:
+    nginx:
+      engine: sandbox
+      module_file: /usr/share/lma_collector/decoders/apache_wsgi_log.lua
+      module_dir: /usr/share/lma_collector/common;/usr/share/heka/lua_modules
+      config:
+        logger: nginx
+        apache_log_pattern: >-
+          %h - %u %t \"%r\" %s %O \"%{Referer}i\" \"%{User-Agent}i\"
+  splitter:
+    nginx:
+      engine: token
+      delimiter: '\n'
+  input:
+    nginx_log:
+      engine: logstreamer
+      log_directory: "/var/log"
+      file_match: 'nginx/(?P<Service>access)\.log\.?(?P<Seq>\d*)$'
+      differentiator: ['nginx', '_', 'Service']
+      priority: ["^Seq"]
+      decoder: "nginx_decoder"
+      splitter: "nginx_splitter"
 metric_collector:
   trigger:
     nginx_check:
