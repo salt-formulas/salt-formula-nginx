@@ -60,6 +60,11 @@ suites:
       pillars-from-files:
         nginx.sls: tests/pillar/proxy.sls
 
+  - name: proxy_with_locations
+    provisioner:
+      pillars-from-files:
+        nginx.sls: tests/pillar/proxy_with_locations.sls
+
   - name: redirect
     provisioner:
       pillars-from-files:
