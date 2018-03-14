@@ -144,6 +144,31 @@ Simple HTTP proxy
               name: gitlab.domain.com
               port: 80
 
+Simple HTTP proxy with multiple locations
+
+.. code-block:: yaml
+
+    nginx:
+      server:
+        site:
+          nginx_proxy_site01:
+            enabled: true
+            type: nginx_proxy
+            name: site01
+            proxy:
+              locations:
+                /:
+                  host: local.domain.com
+                  port: 80
+                  protocol: http
+                /doc/:
+                  host: 172.10.10.200
+                  port: 80
+                  protocol: http
+            host:
+              name: gitlab.domain.com
+              port: 80
+
 Simple Websocket proxy
 
 .. code-block:: yaml
