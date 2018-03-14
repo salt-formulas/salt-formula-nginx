@@ -153,7 +153,7 @@ Simple HTTP proxy with multiple locations
         site:
           nginx_proxy_site01:
             enabled: true
-            type: nginx_proxy
+            type: nginx_proxy_locations
             name: site01
             proxy:
               locations:
