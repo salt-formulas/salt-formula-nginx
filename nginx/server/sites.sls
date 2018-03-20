@@ -90,8 +90,6 @@ sites-available-{{ site_name }}:
   - name: {{ server.vhost_dir }}/{{ site.type }}_{{ site.name }}.conf
   {%- if site.type == 'nginx_proxy' %}
   - source: salt://nginx/files/proxy.conf
-  {%- elif site.type == 'nginx_proxy_locations' %}
-  - source: salt://nginx/files/proxy_locations.conf
   {%- elif site.type == 'nginx_redirect' %}
   - source: salt://nginx/files/redirect.conf
   {%- elif site.type == 'nginx_static' %}
