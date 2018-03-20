@@ -75,10 +75,13 @@
 
 {% endif %}
 
+{%- set old_chain_file = salt['cmd.shell']('cat {0}'.format(chain_file)) %}
+{%- set new_chain_file = salt['cmd.shell']('cat {0} {1}'.format(cert_file, ca_file)) %}
+
 nginx_init_{{ site.host.name }}_tls:
   cmd.run:
   - name: "cat {{ cert_file }} {{ ca_file }} > {{ chain_file }}"
-  - creates: {{ chain_file }}
+  - onlyif: {% if old_chain_file != new_chain_file %}/bin/true{% else %}/bin/false{% endif %}
   - watch_in:
     - service: nginx_service
 
