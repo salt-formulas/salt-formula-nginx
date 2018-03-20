@@ -54,3 +54,46 @@ nginx:
         host:
           name: cloudlab.domain.com
           port: 31337
+      nginx_proxy_site03:
+        enabled: true
+        type: nginx_proxy
+        name: site03
+        proxy:
+          host: 172.120.10.100
+          port: 80
+          protocol: http
+        location:
+          /kek/:
+            host: 172.10.10.100
+            port: 80
+            protocol: http
+            size: 10000m
+            timeout: 43200
+            websocket: true
+            request_buffer: false
+            buffer:
+              number: 4
+              size: 256
+          /doc/:
+            host: 172.10.10.200
+            port: 80
+            protocol: http
+        host:
+          name: cloudlab.domain.com
+          port: 80
+      nginx_proxy_site04:
+        enabled: true
+        type: nginx_proxy
+        name: site04
+        location:
+          /:
+            host: 172.10.10.100
+            port: 80
+            protocol: http
+          /doc/:
+            host: 172.10.10.200
+            port: 80
+            protocol: http
+        host:
+          name: cloudlab.domain.com
+          port: 80
