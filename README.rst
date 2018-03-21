@@ -154,7 +154,7 @@ If proxy part is defined and location is missing `/`, then proxy part is used. I
         site:
           nginx_proxy_site01:
             enabled: true
-            type: nginx_proxy_locations
+            type: nginx_proxy
             name: site01
             proxy:
               host: local.domain.com
@@ -180,7 +180,7 @@ If proxy part is defined and location is missing `/`, then proxy part is used. I
         site:
           nginx_proxy_site01:
             enabled: true
-            type: nginx_proxy_locations
+            type: nginx_proxy
             name: site01
             location:
               /:
