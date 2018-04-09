@@ -144,6 +144,57 @@ Simple HTTP proxy
               name: gitlab.domain.com
               port: 80
 
+Simple HTTP proxy with multiple locations
+If proxy part is defined and location is missing `/`, then proxy part is used. If `/` location is defined then it overrides proxy part. 
+
+.. code-block:: yaml
+
+    nginx:
+      server:
+        site:
+          nginx_proxy_site01:
+            enabled: true
+            type: nginx_proxy
+            name: site01
+            proxy:
+              host: local.domain.com
+              port: 80
+              protocol: http
+            location:
+              /internal/:
+                host: 172.120.10.200
+                port: 80
+                protocol: http
+              /doc/:
+                host: 172.10.10.200
+                port: 80
+                protocol: http
+            host:
+              name: gitlab.domain.com
+              port: 80
+
+.. code-block:: yaml
+
+    nginx:
+      server:
+        site:
+          nginx_proxy_site01:
+            enabled: true
+            type: nginx_proxy
+            name: site01
+            location:
+              /:
+                host: 172.120.10.200
+                port: 80
+                protocol: http
+              /doc/:
+                host: 172.10.10.200
+                port: 80
+                protocol: http
+            host:
+              name: gitlab.domain.com
+              port: 80
+
 Simple Websocket proxy
 
 .. code-block:: yaml
