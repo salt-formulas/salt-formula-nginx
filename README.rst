@@ -264,6 +264,42 @@ Proxy with access policy
               name: gitlab.domain.com
               port: 80
 
+Proxy with rate limiting scheme:
+
+.. code-block:: yaml
+
+    _dollar: '$'
+    nginx:
+      server:
+        site:
+          nginx_proxy_site01:
+            enabled: true
+            type: nginx_proxy
+            name: site01
+            proxy:
+              host: local.domain.com
+              port: 80
+              protocol: http
+            host:
+              name: gitlab.domain.com
+              port: 80
+            limit:
+              enabled: True
+              ip_whitelist:
+              - 127.0.0.1
+              burst: 600
+              rate: 10r/s
+              nodelay: True
+              subfilters:
+                heavy_url:
+                  input: ${_dollar}{binary_remote_addr}${_dollar}{request_uri}
+                  mode: blacklist
+                  items:
+                  - "~.*servers/detail[?]name=.*&status=ACTIVE"
+                  rate: 2r/m
+                  burst: 2
+                  nodelay: True
+
 Gitlab server with user for basic auth
 
 .. code-block:: yaml
