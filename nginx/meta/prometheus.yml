@@ -1,16 +1,39 @@
-{%- from "nginx/map.jinja" import server with context %}
+{%- from "nginx/map.jinja" import server, monitoring with context %}
 {%- if server.get('enabled', False) %}
-{%- raw %}
 server:
   alert:
-    NginxDown:
+    NginxServiceDown:
       if: >-
         nginx_up != 1
+      {%- raw %}
       labels:
-        severity: warning
+        severity: minor
         service: nginx
       annotations:
-        summary: 'Nginx service down'
-        description: 'Nginx service is down on node {{ $labels.host }}'
-{%- endraw %}
+        summary: "NGINX service is down"
+        description: "The NGINX service on the {{ $labels.host }} node is down."
+      {% endraw %}
+    NginxServiceOutage:
+      if: >-
+        count(label_replace(nginx_up, "cluster", "$1", "host", "([^0-9]+).+")) by (cluster) == count(label_replace(nginx_up == 0, "cluster", "$1", "host", "([^0-9]+).+")) by (cluster)
+      {%- raw %}
+      labels:
+        severity: critical
+        service: nginx
+      annotations:
+        summary: "NGINX cluster outage"
+        description: "All NGINX processes within the {{ $labels.cluster }} cluster are down."
+      {% endraw %}
+    NginxDroppedIncomingConnections:
+      if: >-
+        irate(nginx_accepts[5m]) - irate(nginx_handled[5m]) > 0
+      {%- raw %}
+      for: 5m
+      labels:
+        severity: minor
+        service: nginx
+      annotations:
+        summary: "NGINX has dropped incoming connections"
+        description: "{{ $value }} accepted connections per second were dropped by NGINX for at least 5 minutes."
+      {% endraw %}
 {%- endif %}
