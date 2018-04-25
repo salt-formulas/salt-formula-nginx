@@ -17,26 +17,41 @@ install:
   - bundle install
 
 env:
-    - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-xenial-salt-2016.3 SUITE=horizon-no-ssl
-    - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-xenial-salt-2016.3 SUITE=horizon-with-ssl
-    - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-xenial-salt-2016.3 SUITE=proxy
-    - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-xenial-salt-2016.3 SUITE=proxy-rate-limit
-    - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-xenial-salt-2016.3 SUITE=redirect
-    - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-xenial-salt-2016.3 SUITE=static
-    - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-xenial-salt-2016.3 SUITE=stats
-    - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-xenial-salt-2017.7 SUITE=horizon-no-ssl
-    - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-xenial-salt-2017.7 SUITE=horizon-with-ssl
-    - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-xenial-salt-2017.7 SUITE=proxy
-    - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-xenial-salt-2017.7 SUITE=proxy-rate-limit
-    - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-xenial-salt-2017.7 SUITE=redirect
-    - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-xenial-salt-2017.7 SUITE=static
-    - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-xenial-salt-2017.7 SUITE=stats
-    # - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-bionic-salt-2017.7 SUITE=horizon-no-ssl
-    # - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-bionic-salt-2017.7 SUITE=horizon-with-ssl
-    # - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-bionic-salt-2017.7 SUITE=proxy
-    # - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-bionic-salt-2017.7 SUITE=redirect
-    # - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-bionic-salt-2017.7 SUITE=static
-    # - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-bionic-salt-2017.7 SUITE=stats
+    - PLATFORM=epcim/salt:saltstack-ubuntu-xenial-salt-2016.3 SUITE=horizon-no-ssl
+    - PLATFORM=epcim/salt:saltstack-ubuntu-xenial-salt-2016.3 SUITE=horizon-with-ssl
+    - PLATFORM=epcim/salt:saltstack-ubuntu-xenial-salt-2016.3 SUITE=proxy
+    - PLATFORM=epcim/salt:saltstack-ubuntu-xenial-salt-2016.3 SUITE=proxy-rate-limit
+    - PLATFORM=epcim/salt:saltstack-ubuntu-xenial-salt-2016.3 SUITE=redirect
+    - PLATFORM=epcim/salt:saltstack-ubuntu-xenial-salt-2016.3 SUITE=static
+    - PLATFORM=epcim/salt:saltstack-ubuntu-xenial-salt-2016.3 SUITE=stats
+    - PLATFORM=epcim/salt:saltstack-ubuntu-xenial-salt-2017.7 SUITE=horizon-no-ssl
+    - PLATFORM=epcim/salt:saltstack-ubuntu-xenial-salt-2017.7 SUITE=horizon-with-ssl
+    - PLATFORM=epcim/salt:saltstack-ubuntu-xenial-salt-2017.7 SUITE=proxy
+    - PLATFORM=epcim/salt:saltstack-ubuntu-xenial-salt-2017.7 SUITE=proxy-rate-limit
+    - PLATFORM=epcim/salt:saltstack-ubuntu-xenial-salt-2017.7 SUITE=redirect
+    - PLATFORM=epcim/salt:saltstack-ubuntu-xenial-salt-2017.7 SUITE=static
+    - PLATFORM=epcim/salt:saltstack-ubuntu-xenial-salt-2017.7 SUITE=stats
+    - PLATFORM=epcim/salt:saltstack-ubuntu-xenial-salt-2018.3 SUITE=horizon-no-ssl
+    - PLATFORM=epcim/salt:saltstack-ubuntu-xenial-salt-2018.3 SUITE=horizon-with-ssl
+    - PLATFORM=epcim/salt:saltstack-ubuntu-xenial-salt-2018.3 SUITE=proxy
+    - PLATFORM=epcim/salt:saltstack-ubuntu-xenial-salt-2018.3 SUITE=proxy-rate-limit
+    - PLATFORM=epcim/salt:saltstack-ubuntu-xenial-salt-2018.3 SUITE=redirect
+    - PLATFORM=epcim/salt:saltstack-ubuntu-xenial-salt-2018.3 SUITE=static
+    - PLATFORM=epcim/salt:saltstack-ubuntu-xenial-salt-2018.3 SUITE=stats
+    # - PLATFORM=epcim/salt:saltstack-ubuntu-bionic-salt-2017.7 SUITE=horizon-no-ssl
+    # - PLATFORM=epcim/salt:saltstack-ubuntu-bionic-salt-2017.7 SUITE=horizon-with-ssl
+    # - PLATFORM=epcim/salt:saltstack-ubuntu-bionic-salt-2017.7 SUITE=proxy
+    # - PLATFORM=epcim/salt:saltstack-ubuntu-bionic-salt-2017.7 SUITE=proxy-rate-limit
+    # - PLATFORM=epcim/salt:saltstack-ubuntu-bionic-salt-2017.7 SUITE=redirect
+    # - PLATFORM=epcim/salt:saltstack-ubuntu-bionic-salt-2017.7 SUITE=static
+    # - PLATFORM=epcim/salt:saltstack-ubuntu-bionic-salt-2017.7 SUITE=stats
+    # - PLATFORM=epcim/salt:saltstack-ubuntu-bionic-salt-2018.3 SUITE=horizon-no-ssl
+    # - PLATFORM=epcim/salt:saltstack-ubuntu-bionic-salt-2018.3 SUITE=horizon-with-ssl
+    # - PLATFORM=epcim/salt:saltstack-ubuntu-bionic-salt-2018.3 SUITE=proxy
+    # - PLATFORM=epcim/salt:saltstack-ubuntu-bionic-salt-2018.3 SUITE=proxy-rate-limit
+    # - PLATFORM=epcim/salt:saltstack-ubuntu-bionic-salt-2018.3 SUITE=redirect
+    # - PLATFORM=epcim/salt:saltstack-ubuntu-bionic-salt-2018.3 SUITE=static
+    # - PLATFORM=epcim/salt:saltstack-ubuntu-bionic-salt-2018.3 SUITE=stats
 
 before_script:
   - set -o pipefail
