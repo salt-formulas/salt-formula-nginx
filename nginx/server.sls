@@ -78,14 +78,14 @@ nginx_service:
   - require:
     - pkg: nginx_packages
 
-{%- set generate_dhparams = False %}
+{%- set generate_dhparams = { 'enabled': False } %}
 {%- for site_name, site in server.get('site', {}).iteritems() %}
 {%- if site.get('ssl', {}).get('enabled') and site.ssl.get('mode', 'secure') == 'secure' %}
-  {%- set generate_dhparams = True %}
+  {%- do generate_dhparams.update({ 'enabled': True }) %}
 {%- endif %}
 {%- endfor %}
 
-{%- if generate_dhparams %}
+{%- if generate_dhparams['enabled'] %}
 nginx_generate_dhparams:
   cmd.run:
   - name: openssl dhparam -out /etc/ssl/dhparams.pem 2048
