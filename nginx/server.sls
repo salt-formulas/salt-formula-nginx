@@ -82,6 +82,7 @@ nginx_service:
 {%- for site_name, site in server.get('site', {}).iteritems() %}
 {%- if site.get('ssl', {}).get('enabled') and site.ssl.get('mode', 'secure') == 'secure' %}
   {%- do generate_dhparams.update({ 'enabled': True }) %}
+  {%- break %}
 {%- endif %}
 {%- endfor %}
 
