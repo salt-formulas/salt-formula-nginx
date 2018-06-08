@@ -33,7 +33,7 @@ server:
         severity: minor
         service: nginx
       annotations:
-        summary: "NGINX has dropped incoming connections"
-        description: "{{ $value }} accepted connections per second were dropped by NGINX for at least 5 minutes."
+        summary: "NGINX drops incoming connections"
+        description: "NGINX drops {{ $value }} accepted connections per second for 5 minutes."
       {% endraw %}
 {%- endif %}
