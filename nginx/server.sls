@@ -97,4 +97,35 @@ nginx_generate_dhparams:
     - service: nginx_service
 {%- endif %}
 
+{%- if server.wait_for_service is defined %}
+
+{%- if salt['test.provider']('service') == 'systemd' %}
+
+/etc/systemd/system/nginx.service.d:
+  file.directory:
+  - mode: 0755
+  - user: root
+  - group: root
+  - require:
+    - pkg: nginx_packages
+
+/etc/systemd/system/nginx.service.d/override.conf:
+  file.managed:
+  - source: salt://nginx/files/service.override.conf
+  - template: jinja
+  - require:
+    - file: /etc/systemd/system/nginx.service.d
+
+systemctl_reload:
+  module.run:
+  - name: service.systemctl_reload
+  - onchanges:
+    - file: /etc/systemd/system/nginx.service.d/override.conf
+  - watch_in:
+    - service: nginx_service
+
+{%- endif %}
+
+{%- endif %}
+
 {%- endif %}

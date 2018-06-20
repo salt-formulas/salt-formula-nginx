@@ -469,6 +469,18 @@ Nginx stats server (required by collectd nginx plugin)
               name: 127.0.0.1
               port: 8888
 
+Nginx configured to wait for another service/s before starting (currently only with systemd)
+
+.. code-block:: yaml
+
+    nginx:
+      server:
+        wait_for_service:
+          - foo-bar.mount
+        enabled: true
+        site:
+          ...
+
 More Information
 ================
 
