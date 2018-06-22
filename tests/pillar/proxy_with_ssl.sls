@@ -224,6 +224,10 @@ nginx:
             file: '/etc/ssl/client_cert.pem'
             enabled: False
           verify_client: 'off'
+          strict_transport_security:
+            max_age: 16000000
+            include_subdomains: True
+            always: True
       nginx_proxy_site02:
         enabled: true
         type: nginx_proxy

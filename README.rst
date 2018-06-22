@@ -452,6 +452,11 @@ type "string", if mode = 'manual', their type should be "dict" (like shown below
               verify_depth: 1
               session_cache: 'shared:SSL:15m'
               session_timeout: '15m'
+              strict_transport_security:
+                max_age: 16000000
+                include_subdomains: False
+                always: true
+                enabled: true
 
 Nginx stats server (required by collectd nginx plugin)
 
