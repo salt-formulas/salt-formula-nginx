@@ -1,14 +1,18 @@
 
 =============
-Nginx Formula
+Usage
 =============
 
-Nginx is an open source reverse proxy server for HTTP, HTTPS, SMTP, POP3, and IMAP protocols, as well as a load balancer, HTTP cache, and a web server (origin server). The nginx project started with a strong focus on high concurrency, high performance and low memory usage.
+Nginx is an open source reverse proxy server for HTTP, HTTPS,
+SMTP, POP3, and IMAP protocols, as well as a load balancer,
+HTTP cache, and a web server (origin server). The nginx project
+started with a strong focus on high concurrency, high performance
+and low memory usage.
 
 Sample Pillars
 ==============
 
-Gitlab server setup
+Gitlab server setup:
 
 .. code-block:: yaml
 
@@ -37,7 +41,7 @@ Gitlab server setup
               name: gitlab.domain.com
               port: 80
 
-Simple static HTTP site
+Simple static HTTP site:
 
 .. code-block:: yaml
 
@@ -52,7 +56,7 @@ Simple static HTTP site
               name: gitlab.domain.com
               port: 80
 
-Simple load balancer
+Simple load balancer:
 
 .. code-block:: yaml
 
@@ -77,7 +81,7 @@ Simple load balancer
               name: 192.168.0.1
               port: 31337
 
-Static site with access policy
+Static site with access policy:
 
 .. code-block:: yaml
 
@@ -99,7 +103,7 @@ Static site with access policy
               name: gitlab.domain.com
               port: 80
 
-Simple TCP/UDP proxy
+Simple TCP/UDP proxy:
 
 .. code-block:: yaml
 
@@ -125,7 +129,7 @@ Simple TCP/UDP proxy
                 address: 10.10.10.113
                 port: 5353
 
-Simple HTTP proxy
+Simple HTTP proxy:
 
 .. code-block:: yaml
 
@@ -144,8 +148,11 @@ Simple HTTP proxy
               name: gitlab.domain.com
               port: 80
 
-Simple HTTP proxy with multiple locations
-If proxy part is defined and location is missing `/`, then proxy part is used. If `/` location is defined then it overrides proxy part. 
+Simple HTTP proxy with multiple locations:
+
+.. note:: If proxy part is defined and location is missing ``/``,
+          the proxy part is used. If the ``/`` location is defined,
+          it overrides the proxy part.
 
 .. code-block:: yaml
 
@@ -195,7 +202,7 @@ If proxy part is defined and location is missing `/`, then proxy part is used. I
               name: gitlab.domain.com
               port: 80
 
-Simple Websocket proxy
+Simple Websocket proxy:
 
 .. code-block:: yaml
 
@@ -215,7 +222,7 @@ Simple Websocket proxy
               name: gitlab.domain.com
               port: 80
 
-Content filtering proxy
+Content filtering proxy:
 
 .. code-block:: yaml
 
@@ -238,7 +245,7 @@ Content filtering proxy
               name: gitlab.domain.com
               port: 80
 
-Proxy with access policy
+Proxy with access policy:
 
 .. code-block:: yaml
 
@@ -300,7 +307,7 @@ Proxy with rate limiting scheme:
                   burst: 2
                   nodelay: True
 
-Gitlab server with user for basic auth
+Gitlab server with user for basic auth:
 
 .. code-block:: yaml
 
@@ -316,7 +323,7 @@ Gitlab server with user for basic auth
             enabled: true
             password: magicunicorn
 
-Proxy buffering
+Proxy buffering:
 
 .. code-block:: yaml
 
@@ -340,7 +347,7 @@ Proxy buffering
               name: gitlab.domain.com
               port: 80
 
-Let's Encrypt
+Let's Encrypt:
 
 .. code-block:: yaml
 
@@ -364,7 +371,9 @@ Let's Encrypt
               port: 443
 
 SSL using already deployed key and cert file.
-Note that cert file should already contain CA cert and complete chain.
+
+.. note:: The cert file should already contain CA cert and
+          complete chain.
 
 .. code-block:: yaml
 
@@ -378,11 +387,16 @@ Note that cert file should already contain CA cert and complete chain.
               key_file: /etc/ssl/private/mykey.key
               cert_file: /etc/ssl/cert/mycert.crt
 
-Advanced SSL configuration, more information about SSL option may be found
-at http://nginx.org/en/docs/http/ngx_http_ssl_module.html
-!Note that prior to nginx 1.11.0 only one type of ecdh curve can be applied in ssl_ecdh_curve directive
-!!Please note that if mode = 'secure' or mode = 'normal' and 'ciphers' or 'protocols' are set - they should have
-type "string", if mode = 'manual', their type should be "dict" (like shown below)
+Advanced SSL configuration, more information about SSL option
+may be found at http://nginx.org/en/docs/http/ngx_http_ssl_module.html
+
+.. note:: Prior to nginx 1.11.0, only one type of ecdh curve
+          can be applied in ``ssl_ecdh_curve directive``.
+
+          if mode = ``secure`` or mode = ``normal`` and ``ciphers``
+          or ``protocols`` are set, they should have type ``string``.
+          If mode = ``manual``, their type should be ``dict``
+          as shown below.
 
 .. code-block:: yaml
 
@@ -458,7 +472,7 @@ type "string", if mode = 'manual', their type should be "dict" (like shown below
                 always: true
                 enabled: true
 
-Nginx stats server (required by collectd nginx plugin)
+Nginx stats server (required by collectd nginx plugin):
 
 .. code-block:: yaml
 
@@ -474,7 +488,8 @@ Nginx stats server (required by collectd nginx plugin)
               name: 127.0.0.1
               port: 8888
 
-Nginx configured to wait for another service/s before starting (currently only with systemd)
+Nginx configured to wait for another service/s before
+starting (currently only with systemd):
 
 .. code-block:: yaml
 
@@ -494,36 +509,28 @@ More Information
 * http://nginx.com/resources/admin-guide/reverse-proxy/
 * https://mozilla.github.io/server-side-tls/ssl-config-generator/
 
-
 Documentation and Bugs
 ======================
 
-To learn how to install and update salt-formulas, consult the documentation
-available online at:
+* http://salt-formulas.readthedocs.io/
+   Learn how to install and update salt-formulas
 
-    http://salt-formulas.readthedocs.io/
+* https://github.com/salt-formulas/salt-formula-nginx/issues
+   In the unfortunate event that bugs are discovered, report the issue to the
+   appropriate issue tracker. Use the Github issue tracker for a specific salt
+   formula
 
-In the unfortunate event that bugs are discovered, they should be reported to
-the appropriate issue tracker. Use Github issue tracker for specific salt
-formula:
+* https://launchpad.net/salt-formulas
+   For feature requests, bug reports, or blueprints affecting the entire
+   ecosystem, use the Launchpad salt-formulas project
 
-    https://github.com/salt-formulas/salt-formula-nginx/issues
+* https://launchpad.net/~salt-formulas-users
+   Join the salt-formulas-users team and subscribe to mailing list if required
 
-For feature requests, bug reports or blueprints affecting entire ecosystem,
-use Launchpad salt-formulas project:
+* https://github.com/salt-formulas/salt-formula-nginx
+   Develop the salt-formulas projects in the master branch and then submit pull
+   requests against a specific formula
 
-    https://launchpad.net/salt-formulas
-
-You can also join salt-formulas-users team and subscribe to mailing list:
-
-    https://launchpad.net/~salt-formulas-users
-
-Developers wishing to work on the salt-formulas projects should always base
-their work on master branch and submit pull request against specific formula.
-
-    https://github.com/salt-formulas/salt-formula-nginx
-
-Any questions or feedback is always welcome so feel free to join our IRC
-channel:
-
-    #salt-formulas @ irc.freenode.net
+* #salt-formulas @ irc.freenode.net
+   Use this IRC channel in case of any questions or feedback which is always
+   welcome
