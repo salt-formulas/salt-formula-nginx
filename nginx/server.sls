@@ -5,6 +5,19 @@ include:
   - nginx.server.users
   - nginx.server.sites
 
+{#- Do not start nginx when installing packages #}
+{%- if grains.os_family == "Debian" %}
+policy-rc.d_present:
+  file.managed:
+  - name: /usr/sbin/policy-rc.d
+  - mode: 755
+  - contents: |
+      #!/bin/sh
+      exit 101
+  - require_in:
+    - nginx_packages
+{%- endif %}
+
 nginx_packages:
   pkg.installed:
   - names: {{ server.pkgs }}
@@ -13,6 +26,17 @@ nginx_packages:
 nginx_extra_packages:
   pkg.installed:
   - name: nginx-extras
+  - require:
+    - nginx_packages
+{%- endif %}
+
+{#- Do not start nginx when installing packages #}
+{%- if grains.os_family == "Debian" %}
+policy-rc.d_absent:
+  file.absent:
+  - name: /usr/sbin/policy-rc.d
+  - require:
+    - nginx_packages
 {%- endif %}
 
 /etc/nginx/sites-enabled/default:
