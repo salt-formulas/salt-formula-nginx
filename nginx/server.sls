@@ -39,6 +39,11 @@ policy-rc.d_absent:
     - nginx_packages
 {%- endif %}
 
+/etc/nginx/conf.d/default.conf:
+  file.absent:
+  - require:
+    - pkg: nginx_packages
+
 /etc/nginx/sites-enabled/default:
   file.absent:
   - require:
