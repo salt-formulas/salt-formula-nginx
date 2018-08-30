@@ -77,6 +77,9 @@ nginx_service:
   - name: {{ server.service }}
   - require:
     - pkg: nginx_packages
+{%- if server.service_enable is defined and server.service_enable %}
+  - enable: true
+{%- endif %}
 
 {%- set generate_dhparams = { 'enabled': False } %}
 {%- for site_name, site in server.get('site', {}).iteritems() %}
