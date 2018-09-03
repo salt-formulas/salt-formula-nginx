@@ -106,8 +106,8 @@ nginx_service:
   - name: {{ server.service }}
   - require:
     - pkg: nginx_packages
-{%- if server.service_enable is defined and server.service_enable %}
-  - enable: true
+{%- if server.service_enable is defined %}
+  - enable: {{ server.service_enable }}
 {%- endif %}
 
 {%- set generate_dhparams = { 'enabled': False } %}
