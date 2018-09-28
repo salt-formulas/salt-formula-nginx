@@ -472,6 +472,33 @@ may be found at http://nginx.org/en/docs/http/ngx_http_ssl_module.html
                 always: true
                 enabled: true
 
+Setting custom proxy headers:
+
+.. code-block:: yaml
+
+    nginx:
+      server:
+        enabled: true
+        site:
+          custom_headers:
+            type: nginx_proxy
+            proxy_set_header:
+              Host:
+                enabled: true
+                value: "$host:8774"
+              X-Real-IP:
+                enabled: true
+                value: '$remote_addr'
+              X-Forwarded-For:
+                enabled: true
+                value: '$proxy_add_x_forwarded_for'
+              X-Forwarded-Proto:
+                enabled: true
+                value: '$scheme'
+              X-Forwarded-Port:
+                enabled: true
+                value: '$server_port'
+
 Nginx stats server (required by collectd nginx plugin):
 
 .. code-block:: yaml
