@@ -4,8 +4,12 @@ parameters:
       site:
         nginx_stats_server:
           enabled: true
-          type: nginx_stats
+          type: nginx_static
+          stats: True
+          indexes: []
+          root: disabled
           name: stats
           host:
             name: 127.0.0.1
+            address: 127.0.0.1
             port: 8888
