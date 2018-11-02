@@ -499,7 +499,43 @@ Setting custom proxy headers:
                 enabled: true
                 value: '$server_port'
 
-Nginx stats server (required by collectd nginx plugin):
+Define site catalog indexes:
+
+.. code-block:: yaml
+
+    nginx:
+      server:
+        enabled: true
+        site:
+          nginx_catalog:
+            enabled: true
+            type: nginx_static
+            name: server
+            indexes:
+            - index.htm
+            - index.html
+            host:
+              name: 127.0.0.1
+              port: 80
+
+Define site catalog autoindex:
+
+.. code-block:: yaml
+
+    nginx:
+      server:
+        enabled: true
+        site:
+          nginx_catalog:
+            enabled: true
+            type: nginx_static
+            name: server
+            autoindex: True
+            host:
+              name: 127.0.0.1
+              port: 80
+
+Nginx stats server (required by collectd nginx plugin) (DEPRECATED):
 
 .. code-block:: yaml
 
@@ -513,6 +549,26 @@ Nginx stats server (required by collectd nginx plugin):
             name: server
             host:
               name: 127.0.0.1
+              port: 8888
+
+or:
+
+.. code-block:: yaml
+
+    nginx:
+      server:
+        enabled: true
+        site:
+          nginx_stats_server:
+            enabled: true
+            root: disabled
+            indexes: []
+            stats: True
+            type: nginx_static
+            name: stat_server
+            host:
+              name: 127.0.0.1
+              address: 127.0.0.1
               port: 8888
 
 Nginx configured to wait for another service/s before

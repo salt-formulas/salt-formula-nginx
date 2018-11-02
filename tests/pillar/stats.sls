@@ -16,4 +16,14 @@ nginx:
         host:
           name: 127.0.0.1
           port: 8888
-
+      nginx_stats_server2:
+        enabled: true
+        root: disabled
+        stats: True
+        indexes: []
+        type: nginx_static
+        name: stats_server
+        host:
+          name: 127.0.0.1
+          address: 127.0.0.1
+          port: 8889
