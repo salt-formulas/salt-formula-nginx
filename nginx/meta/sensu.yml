@@ -12,7 +12,7 @@ check:
     occurrences: 1
     subscribers:
     - local-nginx-server
-  {%- for site_name, site in server.get('site', {}).iteritems() %}
+  {%- for site_name, site in server.get('site', {}).items() %}
   {%- if site.enabled %}
   {%- if site.get('check', True) %}
   remote_nginx_server_http_{{ site.host.name }}_{{ site.host.get('port', '80') }}:

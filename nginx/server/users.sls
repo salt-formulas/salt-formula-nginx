@@ -1,6 +1,6 @@
 {%- from "nginx/map.jinja" import server with context %}
 
-{%- for user_name, user in server.get('user', {}).iteritems() %}
+{%- for user_name, user in server.get('user', {}).items() %}
 {%- if user.enabled %}
 
 nginx_setup_user_{{ user_name }}:
