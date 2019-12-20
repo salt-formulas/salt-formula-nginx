@@ -2,7 +2,7 @@
 
 {%- set ssl_certificates = {} %}
 
-{%- for site_name, site in server.get('site', {}).iteritems() %}
+{%- for site_name, site in server.get('site', {}).items() %}
 {%- if site.get('enabled') %}
 
 {%- if site.get('ssl', {'enabled': False}).enabled %}

@@ -12,7 +12,7 @@ doc:
           name: Bind host
           value: {{ server.bind.address }}
       endpoint:
-  {%- for site_name, site in server.get('site', {}).iteritems() %}
+  {%- for site_name, site in server.get('site', {}).items() %}
   {%- if site.get('enabled') %}
         {{ site_name }}_{{ site.type }}:
           name: {{ site_name }}
